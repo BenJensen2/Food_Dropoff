@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Dropoff</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style-restaurant.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="row justify-content-between">
+                <div class="col">
+                    <a href="/">
+                        <svg class="bi bi-truck" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5v7h-1v-7a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5v1A1.5 1.5 0 0 1 0 10.5v-7zM4.5 11h6v1h-6v-1z"/>
+                            <path fill-rule="evenodd" d="M11 5h2.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5h-1v-1h1a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4.5h-1V5zm-8 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                            <path fill-rule="evenodd" d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <h3>Restaurant Name</h3>
+                </div>
+                <div class="col text-right">
+                    <a href="/restaurants/editaccount">Account</a> | 
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main justify-content-center">
+            <div class="leftpane">
+                <div class="row justify-content-center">
+                    <div class="col-6 text-center">
+                        <p>May 27, 2020</p>
+                        <div class="row">
+                            <div class="col col-sm-4 text-left">
+                                Order ID:
+                            </div>
+                            <div class="col col-sm-8 text-left">
+                                2349876876
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-sm-4 text-left">
+                                Order Status:
+                            </div>
+                            <div class="col col-sm-8 text-left">
+                                Received
+                                <span>
+                                    <a href="/restaurant/confirm" role="button" class="btn btn-outline-dark btn-sm">Confirm</a> | 
+                                    <a href="#" role="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#cancelorder">Cancel</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-sm-4 text-left">
+                                Ordered By:
+                            </div>
+                            <div class="col col-sm-8 text-left">
+                                John Doe
+                                <span>
+                                    <a href="#" class="ajax-message">Message John</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-sm-4 text-left">
+                                Order Detail:
+                            </div>
+                            <div class="col col-sm-8 text-left">
+                                <div class="row">
+                                    <div class="col">
+                                        Item Quantity Price
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        Item Quantity Price
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        Item Quantity Price
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        Item Quantity Price
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-sm-4 text-left">
+                                Order Total:
+                            </div>
+                            <div class="col col-sm-8 text-left">
+                                $22.50
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rightpane">
+                <div class="rightpane-container">
+                    <div class="message-header">
+                    </div>
+                    <div class="message-content">
+                    </div>
+                    <div class="message-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="cancelorder" tabindex="-1" role="dialog" aria-labelledby="modalcancelorder" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="ModalLongTitle">Confirm Order Cancellation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                You cannot undo this. Click 'Close' to keep the order.
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Cancel Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script-restaurant.js' %}"></script>
+</body>
+</html>

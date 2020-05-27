@@ -1,0 +1,16 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100vh;
+}
+
+.text-danger p {
+    padding: 0px;
+    margin: 0px;
+    text-align: left;
+}
+

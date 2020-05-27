@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a New Event</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include "navbar.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="row justify-content-center">
+                    <h1>Edit Event</h1>
+                </div>
+                <form action="/event/{{event.id}}/update" method="POST">
+                    {% csrf_token %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == "date" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="Date">Date</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <input type="datetime-local" name="date" value="{{date}}">
+                        </div>
+                    </div>
+                    {% for message in messages %}
+                        {% if message.extra_tags == "address" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="address">Address</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <input type="text" name="address" value="{{event.location.address}}">
+                        </div>
+                    </div>
+                    {% for message in messages %}
+                        {% if message.extra_tags == "city" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="city">City</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <input type="text" name="city" value="{{event.location.city}}">
+                        </div>
+                    </div>
+                    {% for message in messages %}
+                        {% if message.extra_tags == "state" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="state">State</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <input type="text" name="state" value="{{event.location.state}}">
+                        </div>
+                    </div>
+                    {% for message in messages %}
+                        {% if message.extra_tags == "zip_code" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="zip_code">Zip Code</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <input type="text" name="zip_code" value="{{event.location.zip_code}}">
+                        </div>
+                    </div>
+                    {% for message in messages %}
+                        {% if message.extra_tags == "min_orders" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="min_orders">Minimum Orders</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <input type="number" min="0" name="min_orders" value="{{event.minimum_orders}}">
+                        </div>
+                    </div>
+                    <div class="row my-2 justify-content-center">
+                        <span class="small">*Sets the minimum number of orders needed to hold the event (customer cannot see this)</span>
+                    </div>
+                    {% for message in messages %}
+                        {% if message.extra_tags == "min_per_order" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="min_per_order">Minimum Order Amount</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <input type="number" min="0" name="min_per_order" value="{{event.minimum_amount_per_order}}">
+                        </div>
+                    </div>
+                    <input type="number" value="10000" hidden name="max_orders">
+                    <div class="row my-2 justify-content-center">
+                        <span class="small">*Sets the minimum order price that the customer needs to meet</span>
+                    </div>
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <label for="notes">Notes</label>
+                        </div>
+                        <div class="col-sm-5 col-md-3 col-lg-3">
+                            <textarea name="notes" id="" cols="30" rows="10">{{event.notes}}</textarea>
+                        </div>
+                    </div>
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-2">
+                            <a href="" class="btn btn-danger">Cancel</a>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

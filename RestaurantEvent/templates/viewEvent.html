@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Dropoff</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include "navbar.html" %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col text-center">
+                        <h3>{{event.date_time}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-left">
+                        Dropoff Time: {{event.date_time}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-left">
+                       Dropoff Location: {{event.location}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-left">
+                       Orders:
+                    </div>
+                </div>
+                <!--Accordion wrapper-->
+                <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+                    {% for order in orders %}
+
+                    <!-- Accordion card -->
+                    <div class="card">
+                
+                        <!-- Card header -->
+                        <div class="card-header" role="tab" id="heading{{order.id}}">
+                        <a data-toggle="collapse" data-parent="#accordionEx" href="#collapse{{order.id}}" aria-expanded="true"
+                            aria-controls="collapse{{order.id}}">
+                            <h5 class="mb-0">
+                            {{order.user.first_name}} {{order.user.last_name}} ({{order.status}})<i class="fas fa-angle-down rotate-icon"></i>
+                            </h5>
+                        </a>
+                        </div>
+                    
+                        <!-- Card body -->
+                        <div id="collapse{{order.id}}" class="collapse show" role="tabpanel" aria-labelledby="heading{{order.id}}"
+                        data-parent="#accordionEx">
+                        <div class="card-body">
+                            <ul>
+                                {% for item in order.quantities.all %}
+                                <li>{{item.item.item_title}} ${{item.item.item_price}} ({{item.quantity}})</li>
+                                {% endfor %}
+                            </ul>
+                            <div class="input-group">
+                                <div class="form-check">
+                                    <label for="">Unconfirmed</label>
+                                    <input type="radio" name="orderStatus-{{order.id}}" value="unconfirmed">
+                                </div>
+                                <div class="form-check">
+                                    <label for="">Confirmed</label>
+                                    <input type="radio" name="orderStatus-{{order.id}}" value="confirmed" >
+                                </div>
+                                <div class="form-check">
+                                    <label for="">In Progress</label>
+                                    <input type="radio" name="orderStatus-{{order.id}}" value="inProgress" >
+                                </div>
+                                <div class="form-check">
+                                    <label for="">Complete</label>
+                                    <input type="radio" name="orderStatus-{{order.id}}" value="complete" >
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    
+                    </div>
+                    <!-- Accordion card -->
+                    {% endfor %}
+                </div>
+                <!-- Accordion wrapper -->
+                
+                <div class="row">
+                    <div class="col text-center">
+                        <a href="/event/{{event.id}}/complete" class="btn btn-primary">Complete Event</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

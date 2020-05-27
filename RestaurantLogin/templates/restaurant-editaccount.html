@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Dropoff</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="row justify-content-between">
+                <div class="col">
+                    <a href="/">
+                        <svg class="bi bi-truck" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5v7h-1v-7a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5v1A1.5 1.5 0 0 1 0 10.5v-7zM4.5 11h6v1h-6v-1z"/>
+                            <path fill-rule="evenodd" d="M11 5h2.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5h-1v-1h1a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4.5h-1V5zm-8 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                            <path fill-rule="evenodd" d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <h3>Restaurants</h3>
+                </div>
+                <div class="col text-right">
+                    Account | Logout
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6 text-center">
+                <p>Edit Account Detail</p>
+                <form class="ajaxform-reg" action="/editaccount" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="restaurant_name" class="col-sm-4 col-form-label">Restaurant Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="restaurant_name" id="restaurant_name" value="{{restaurant.restaurant_name}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "restaurant_name" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errrestaurant_name"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cuisine" class="col-sm-4 col-form-label">Cuisine</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="cuisine" name="cuisine">
+                                <option value="thai" {% if restaurant.cuisine == 'thai' %} selected {% endif %}>Thai</option>
+                                <option value="chinese" {% if restaurant.cuisine == 'chinese' %} selected {% endif %}>Chinese</option>
+                                <option value="korean" {% if restaurant.cuisine == 'korean' %} selected {% endif %}>Korean</option>
+                                <option value="japanese" {% if restaurant.cuisine == 'japanese' %} selected {% endif %}>Japanese</option>
+                                <option value="other" {% if restaurant.cuisine == 'other' %} selected {% endif %}>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "cuisine" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errcuisine"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="address" class="col-sm-4 col-form-label">Street Address</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="address" id="address" value="{{restaurant.location.address}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "address" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger erraddress"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="city" class="col-sm-4 col-form-label">City</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="city" id="city" value="{{restaurant.location.city}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "city" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errcity"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="state" class="col-sm-4 col-form-label">State</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="state" name="state">
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA" selected>California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "state" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errstate"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="zip_code" class="col-sm-4 col-form-label">Zip Code</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{restaurant.location.zip_code}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "zip_code" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errzip_code"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="first_name" class="col-sm-4 col-form-label">First Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{restaurant.first_name}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "first_name" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errfirst_name"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="last_name" class="col-sm-4 col-form-label">Last Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="{{restaurant.last_name}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "last_name" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errlast_name"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" name="email" id="email" value="{{restaurant.email}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "email" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger erremail"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="phone_number" class="col-sm-4 col-form-label">Phone Number</label>
+                        <div class="col-sm-8">
+                            <input type="phone_number" class="form-control" name="phone_number" id="phone_number" value="{{restaurant.phone_number}}">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "phone_number" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errphone_number"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-4 col-form-label">Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "password" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errpassword"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label for="confirmpw" class="col-sm-4 col-form-label">Confirm Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" name="confirmpw" id="confirmpw">
+                        </div>
+                        <div class="col-sm-4"></div>
+                        {% for message in messages %}
+                        {% if message.extra_tags == "confirmpw" %}
+                        <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        <span class="col-sm-8 text-danger errconfirmpw"></span>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-dark btn-sm" type="submit">Register</button>                       
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

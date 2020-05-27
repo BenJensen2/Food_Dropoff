@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/success.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="top">
+            <h1>Success! Welcome, {{first_name}}</h1>
+            <a href="/">Log Out</a>
+            <!-- Have logout clear the session -->
+        </div>
+        <p class="success_green">Successfully registered (or logged in)!</p>
+    </div>
+    
+</body>
+</html>
+

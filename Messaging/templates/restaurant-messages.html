@@ -1,0 +1,62 @@
+<!-- partial html for message window
+on restaurant order detail page
+sender = restaurant, recipient = user -->
+
+<div class="message-header">
+    <div class="justify-content-between">
+        <span>Message {{one_order.user.first_name}} about order {{one_order.id}}</span>
+        <span><a href="#" class="ajax-closemessage">
+            <svg class="bi bi-x-square-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm9.854 4.854a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
+            </svg>
+        </a></span>
+    </div> 
+</div>
+<div class="message-content">
+    {% load tz %}
+    {% for message in order_messages %}
+        {% ifchanged message.created_at|timezone:"US/Pacific"|date:"j" %}
+            <div class="row addrow"></div>
+        {% endifchanged %}
+        {% if message.sent_by == 'user' %}
+        <div class="row justify-content-end">
+            <div class="row">
+                <div class="col-sm-8 msgreceived">
+                    {{message.message}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    Sent {{message.created_at|timezone:"US/Pacific"|date:'F j, Y h:i A' }} PST}}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row justify-content-start">
+            <div class="row">
+                <div class="col-sm-8 msgsent">
+                    {{message.message}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    Sent {{message.created_at|timezone:"US/Pacific"|date:'F j, Y h:i A' }} PST}}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="message-footer">
+    <form class="ajaxform-msg" action="/messaging/sendmsg" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="oid" id="msgoid" value="{{one_order.id}}">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <textarea name="message" id="message" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="text-right">
+            <button class="btn btn-dark btn-sm" type="submit">Send</button>                       
+        </div>
+    </form>
+</div>
