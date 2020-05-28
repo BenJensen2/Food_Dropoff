@@ -6,7 +6,7 @@
     <title>Food Dropoff</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style-restaurant.css' %}">
 </head>
 <body>
     <div class="container">
@@ -32,12 +32,12 @@
         <div class="row justify-content-center">
             <div class="col-6 text-center">
                 <p>Edit Account Detail</p>
-                <form class="ajaxform-reg" action="/editaccount" method="POST">
+                <form class="ajaxform-edit" action="/restaurantlogin/update/{{one_restaurant.id}}" method="POST" resid={{one_restaurant.id}}>
                     {% csrf_token %}
                     <div class="form-group row">
                         <label for="restaurant_name" class="col-sm-4 col-form-label">Restaurant Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="restaurant_name" id="restaurant_name" value="{{restaurant.restaurant_name}}">
+                            <input type="text" class="form-control" name="restaurant_name" id="restaurant_name" value="{{one_restaurant.restaurant_name}}" readonly>
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -51,11 +51,11 @@
                         <label for="cuisine" class="col-sm-4 col-form-label">Cuisine</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="cuisine" name="cuisine">
-                                <option value="thai" {% if restaurant.cuisine == 'thai' %} selected {% endif %}>Thai</option>
-                                <option value="chinese" {% if restaurant.cuisine == 'chinese' %} selected {% endif %}>Chinese</option>
-                                <option value="korean" {% if restaurant.cuisine == 'korean' %} selected {% endif %}>Korean</option>
-                                <option value="japanese" {% if restaurant.cuisine == 'japanese' %} selected {% endif %}>Japanese</option>
-                                <option value="other" {% if restaurant.cuisine == 'other' %} selected {% endif %}>Other</option>
+                                <option value="thai" {% if one_restaurant.cuisine == 'thai' %} selected {% endif %}>Thai</option>
+                                <option value="chinese" {% if one_restaurant.cuisine == 'chinese' %} selected {% endif %}>Chinese</option>
+                                <option value="korean" {% if one_restaurant.cuisine == 'korean' %} selected {% endif %}>Korean</option>
+                                <option value="japanese" {% if one_restaurant.cuisine == 'japanese' %} selected {% endif %}>Japanese</option>
+                                <option value="other" {% if one_restaurant.cuisine == 'other' %} selected {% endif %}>Other</option>
                             </select>
                         </div>
                         <div class="col-sm-4"></div>
@@ -69,7 +69,7 @@
                     <div class="form-group row">
                         <label for="address" class="col-sm-4 col-form-label">Street Address</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="address" id="address" value="{{restaurant.location.address}}">
+                            <input type="text" class="form-control" name="address" id="address" value="{{one_restaurant.location.address}}">
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -82,7 +82,7 @@
                     <div class="form-group row">
                         <label for="city" class="col-sm-4 col-form-label">City</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="city" id="city" value="{{restaurant.location.city}}">
+                            <input type="text" class="form-control" name="city" id="city" value="{{one_restaurant.location.city}}">
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -160,7 +160,7 @@
                     <div class="form-group row">
                         <label for="zip_code" class="col-sm-4 col-form-label">Zip Code</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{restaurant.location.zip_code}}">
+                            <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{one_restaurant.location.zip_code}}">
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -173,7 +173,7 @@
                     <div class="form-group row">
                         <label for="first_name" class="col-sm-4 col-form-label">First Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{restaurant.first_name}}">
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{one_restaurant.first_name}}">
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -186,7 +186,7 @@
                     <div class="form-group row">
                         <label for="last_name" class="col-sm-4 col-form-label">Last Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="last_name" id="last_name" value="{{restaurant.last_name}}">
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="{{one_restaurant.last_name}}">
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -199,7 +199,7 @@
                     <div class="form-group row">
                         <label for="email" class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" name="email" id="email" value="{{restaurant.email}}">
+                            <input type="email" class="form-control" name="email" id="email" value="{{one_restaurant.email_address}}">
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -212,7 +212,7 @@
                     <div class="form-group row">
                         <label for="phone_number" class="col-sm-4 col-form-label">Phone Number</label>
                         <div class="col-sm-8">
-                            <input type="phone_number" class="form-control" name="phone_number" id="phone_number" value="{{restaurant.phone_number}}">
+                            <input type="phone_number" class="form-control" name="phone_number" id="phone_number" value="{{one_restaurant.phone_number}}">
                         </div>
                         <div class="col-sm-4"></div>
                         {% for message in messages %}
@@ -249,7 +249,8 @@
                         <span class="col-sm-8 text-danger errconfirmpw"></span>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-dark btn-sm" type="submit">Register</button>                       
+                        <button class="btn btn-dark btn-sm" type="submit">Register</button>
+                        <a class="btn btn-dark btn-sm" href="/restaurantlogin/welcome" role="button">Cancel</a>                      
                     </div>
                 </form>
             </div>
@@ -258,6 +259,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/script-restaurant.js' %}"></script>
 </body>
 </html>

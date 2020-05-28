@@ -4,7 +4,7 @@ import re
 import bcrypt
 
 class RestaurantManager(models.Manager):
-    def reg_validator(self, postData):
+    def reg_validator(self, postData, restaurantID):
         errors={}
         if len(postData['restaurant_name']) < 2:
             errors['restaurant_name'] = "Restaurant name must be at least 2 characters in length"
@@ -33,16 +33,19 @@ class RestaurantManager(models.Manager):
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "Please enter a valid email address"
-        elif len(Restaurant.objects.filter(email_address__iexact=postData['email'])) > 0:
+        elif restaurantID < 0:
+            if len(Restaurant.objects.filter(email_address__iexact=postData['email'])) > 0:
+                errors['email'] = "An account already exists for this email"
+        elif len(Restaurant.objects.filter(email_address__iexact=postData['email']).exclude(id=restaurantID)) > 0:
             errors['email'] = "An account already exists for this email"
 
         if len(postData['phone_number']) != 10:
             errors['phone_number'] = "Enter a valid phone number with area code without dashes, parentheses or spaces"
         
-
         PW_REGEX = re.compile(r'^(?=.*\d)[a-zA-Z\d]{8,20}$')
-        if not PW_REGEX.match(postData['password']):
-            errors['password'] = "Password must be between 8-20 characters in length and must contain at least one number"
+        if restaurantID < 0 or len(postData['password']) > 0:
+            if not PW_REGEX.match(postData['password']):
+                errors['password'] = "Password must be between 8-20 characters in length and must contain at least one number"
         
         if not postData['password'] == postData['confirmpw']:
             errors['confirmpw'] = "Passwords do not match - please confirm password again"

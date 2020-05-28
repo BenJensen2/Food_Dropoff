@@ -7,10 +7,13 @@ urlpatterns = [
     path('',views.index), # render login form
     path('register',views.register), # render registration form
     path('login',views.login), # process login request
-    path('create',views.create), # process registration requeset
+    path('create',views.create), # process registration request
+    path('edit/<int:restaurantID>',views.edit), # render edit account form
+    path('update/<int:restaurantID>',views.update), # process registration request
     path('ajax-regval',views.testunique), # ajax reg validation
     path('ajax-logval',views.testlogin), # ajax login validation
     path('welcome',views.welcome), # render welcome page for valid id
+    path('ajax-editval',views.testlogin), # ajax edit validation
     
     # path('restaurant_login/new', views.new),
     # path('restaurant_login/<int:show_id>', views.show_info),
