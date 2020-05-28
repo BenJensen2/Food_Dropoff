@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/style-messaging.css' %}">
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="container">
-        <div class="header">
+        <!-- <div class="header">
             <div class="row justify-content-between">
                 <div class="col">
                     <a href="/">
@@ -29,13 +30,13 @@
                     <a href="/logout">Logout</a>
                 </div>
             </div>
-        </div>
+        </div> -->
         
         <div class="main justify-content-center">
             <div class="leftpane">
                 {% load tz %}
                 <div class="row justify-content-center">
-                    <div class="col-6 text-center">
+                    <div class="col-8 text-center">
                         <p>{{one_order.event.date_time|timezone:"US/Pacific"|date:'F j, Y' }}</p>
                         <div class="row">
                             <div class="col col-sm-4 text-left">
@@ -55,7 +56,7 @@
                                     {% if one_order.status == 'Received' %}
                                     <a href="/messaginng/confirm" role="button" class="btn btn-outline-dark btn-sm ajax-confirmorder" orderid = "{{one_order.id}}">Confirm</a>
                                     {% endif %}
-                                    {% if one_order.status == 'Received' or one_order.status == 'Confirmed'}
+                                    {% if one_order.status == 'Received' or one_order.status == 'Confirmed' %}
                                     <a href="#" role="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#cancelorder">Cancel</a>
                                     {% endif %}
                                 </span>
@@ -69,7 +70,7 @@
                                 {{one_order.user.first_name}} {{one_order.user.last_name}}
                                 {% if one_order.status != 'Completed' or one_order.status != 'Cancelled' %}
                                 <span>
-                                    <a href="#" class="ajax-message" orderid="{{one_order.id}}">Message {{one_order.user.first_name}}</a>
+                                    <a href="#" class="ajax-message" orderid="{{one_order.id}}" fname="{{one_urser.user.first_name}}">Message {{one_order.user.first_name}}</a>
                                 </span>
                                 {% endif %}
                             </div>
@@ -88,9 +89,9 @@
                                     <tbody>
                                         {% for j in one_order.quantities.all %}
                                         <tr>
-                                            <td>j.item.item_title</td>
-                                            <td>j.quantity</td>
-                                            <td>j.item.item_price</td>
+                                            <td>{{j.item.item_title}}</td>
+                                            <td>{{j.quantity}}</td>
+                                            <td>{{j.item.item_price}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -118,11 +119,11 @@
             </div>
             <div class="rightpane">
                 <div class="rightpane-container">
-                    <div class="message-header">
+                    <div class="message-header text-center">
                     </div>
                     <div class="message-content">
                     </div>
-                    <div class="message-footer">
+                    <div class="message-footer text-center">
                     </div>
                 </div>
             </div>

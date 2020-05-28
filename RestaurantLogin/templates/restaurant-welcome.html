@@ -48,9 +48,8 @@
                 </div>
                 <div class="accordion" id="upcomingevents">
                     {% load tz %}
-                    {% localtime on %}
                     {% for i in one_restaurant.events.all|dictsort:"date_time" %}
-                    {% if i.date_time > now %}
+                    {% if i.status == 'In Progress' %}
                     <div class="card">
                         <div class="card-header" id="heading{{i.id}}">
                             <h2 class="mb-0">
@@ -60,7 +59,7 @@
                             </h2>
                         </div>
                     
-                        <div id="collapse{{i.id}}" class="collapse show" aria-labelledby="heading{{i.id}}" data-parent="#upcomingevents">
+                        <div id="collapse{{i.id}}" class="collapse {%if i.id == id1 %}show{% endif %}" aria-labelledby="heading{{i.id}}" data-parent="#upcomingevents">
                             <div class="card-body">
                                 <p class="text-left">Location: {{i.location}}</p>
                                 <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
@@ -70,7 +69,6 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                    {% endlocaltime %}
                 </div>
             </div>
         </div>
@@ -79,9 +77,9 @@
             <div class="col-sm-8">
                 <p class="text-left title">Past Events:</p>
                 <div class="accordion" id="pastevents">
-                    {% localtime on %}
+                    
                     {% for i in one_restaurant.events.all|dictsortreversed:"date_time" %}
-                    {% if i.date_time < now %}
+                    {% if i.status == 'Completed' %}
                     <div class="card">
                         <div class="card-header" id="heading{{i.id}}">
                             <h2 class="mb-0">
@@ -91,7 +89,7 @@
                             </h2>
                         </div>
                     
-                        <div id="collapse{{i.id}}" class="collapse show" aria-labelledby="heading{{i.id}}" data-parent="#pastevents">
+                        <div id="collapse{{i.id}}" class="collapse {%if i.id == id2 %}show{% endif %}" aria-labelledby="heading{{i.id}}" data-parent="#pastevents">
                             <div class="card-body">
                                 <p class="text-left">Location: {{i.location}}</p>
                                 <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
@@ -101,7 +99,6 @@
                     </div>
                     {% endif %}
                     {% endfor %}
-                    {% endlocaltime %}
                 </div>
             </div>
         </div>

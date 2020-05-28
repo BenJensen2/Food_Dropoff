@@ -15,18 +15,21 @@ def orderDetail(request, orderID):
     if order:
         if 'restaurantID' in request.session:
             rid = Order.objects.get(id=orderID).event.restaurant_id
+            print(rid)
+            print(request.session['restaurantID'])
             if rid == request.session['restaurantID']:
                 order = Order.objects.get(id=orderID)
                 running_total = 0
                 for i in order.quantities.all():
                     running_total += i.quantity * i.item.item_price
+                    print(running_total)
 
                 context = {
                     'one_order': Order.objects.get(id=orderID),
                     'order_messages': Message.objects.filter(order_id=orderID).order_by('created_at'),
                     'order_sum': running_total,
                 }
-            return render(request,'restaurant-orderdetail.html', context)
+                return render(request,'restaurant-orderdetail.html', context)
         elif 'userID' in request.session:
             uid = Order.objects.get(id=orderID).user_id
             if uid == request.session['userID']:
@@ -105,6 +108,30 @@ def loadMessage(request, orderID):
                     return render(request,'user-messages.html', context)
     return redirect('/')
 
+def refreshMessage(request, orderID):
+    #Render partial html
+    if request.method == 'GET' and  request.is_ajax():
+        order = Order.objects.filter(id=orderID)
+        if order:
+            order = Order.objects.get(id=orderID)
+            if 'restaurantID' in request.session:
+                rid = Order.objects.get(id=orderID).event.restaurant_id
+                if rid == request.session['restaurantID']:
+                    context = {
+                        'one_order': Order.objects.get(id=orderID),
+                        'order_messages': Message.objects.filter(order_id=orderID).order_by('created_at'),
+                    }
+                    return render(request,'restaurant-msgcontent.html', context)
+            elif 'userID' in request.session:
+                uid = Order.objects.get(id=orderID).user_id
+                if uid == request.session['userID']:
+                    context = {
+                        'one_order': Order.objects.get(id=orderID),
+                        'order_messages': Message.objects.filter(order_id=orderID).order_by('created_at'),
+                    }
+                    return render(request,'user-messages.html', context)
+    return redirect('/')
+
 def sendMessage(request):
     #Process POST request for new message
     #Render partial html
@@ -120,7 +147,7 @@ def sendMessage(request):
                         'one_order': Order.objects.get(id=request.POST['oid']),
                         'order_messages': Message.objects.filter(order_id=request.POST['oid']).order_by('created_at'),
                     }
-                    return render(request,'restaurant-messages.html', context)
+                    return render(request,'restaurant-msgcontent.html', context)
             elif 'userID' in request.session:
                 uid = Order.objects.get(id=request.POST['oid']).user_id
                 if uid == request.session['userID'] and len(request.POST['message'])>0:

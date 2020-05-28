@@ -1,0 +1,1 @@
+<form class='ajaxform-msg form-inline' action='/messaging/sendmsg' method='POST'>{% csrf_token %}<input type='hidden' name='oid' id='msgoid' value='{{one_order.id}}'><div class='form-group'><div class='col divtext'><textarea name='message' id='txtmessage' rows='2'></textarea></div><button class='btn btn-dark btn-sm msgbtn' type='submit'>Send</button></div></form>
