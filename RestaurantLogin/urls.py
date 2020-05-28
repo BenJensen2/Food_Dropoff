@@ -2,6 +2,7 @@ from django.urls import path #Include path function
 from . import views # import views file within the same folder (from .)
 
 # RESTful
+#Starts with restaurantlogin/
 urlpatterns = [
     path('',views.index), # render login form
     path('register',views.register), # render registration form
