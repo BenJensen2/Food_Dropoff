@@ -42,6 +42,17 @@ def addItem(request):
     else:
         return redirect("/")
 
+#Path is /menu/new/<int:itemID>/removeItem
+def removeItem(request, itemID):
+    if debug:
+        request.session["restaurantID"] = 1
+    if "restaurantID" in request.session:
+        item = Item.objects.get(id=itemID)
+        item.delete()
+        return redirect("/menu/new")
+    else:
+        return redirect("/")
+
 def create(request):
     Menu.objects.create(
         name=request.POST['name']
