@@ -22,7 +22,7 @@ urlpatterns = [
     path('messaging/', include('Messaging.urls')),
     path('restaurantlogin/', include('RestaurantLogin.urls')),
     path('', include('RestaurantItem.urls')),    
-    path('', include('RestaurantMenu.urls')),
+    path('menu/', include('RestaurantMenu.urls')),
     path('event/', include('RestaurantEvent.urls')),
     path('', include('UserLogin.urls')),
     path('user/order/', include('UserOrder.urls')),
