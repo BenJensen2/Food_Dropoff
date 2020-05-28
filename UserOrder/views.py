@@ -6,7 +6,7 @@ from RestaurantItem.models import *
 from django.contrib import messages
 import math
 
-debug = True
+debug = False
 
 def index(request):
     return HttpResponse('Works')

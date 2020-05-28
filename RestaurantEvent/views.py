@@ -5,7 +5,7 @@ from django.contrib import messages
 import datetime
 
 #Used for debugging, turn to true to turn off check if a restaurant is logged in
-debug = True
+debug = False
 
 def index(request):
 

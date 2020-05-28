@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import Menu, Item
 from RestaurantLogin.models import *
 
-debug = True
+debug = False
 
 def index(request):
     context = {
