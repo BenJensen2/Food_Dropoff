@@ -18,6 +18,8 @@ def index(request):
 #Route is /event/new/create
 def createEvent(request):
     #Make sure a restaurant is logged in
+    if debug:
+        request.session["restaurantID"] = 1
     if "restaurantID" in request.session or debug:
         errors = Event.objects.validator(request.POST)
         print(f"Date: {request.POST['date']}")
@@ -37,7 +39,7 @@ def createEvent(request):
             )
             #Create the event
             Event.objects.create(
-                restaurant_id = restaurant,
+                restaurant = restaurant,
                 menu = restaurant.menus.first(),
                 location= location,
                 date_time = request.POST['date'],
@@ -47,7 +49,7 @@ def createEvent(request):
                 maximum_orders = 10000, #value is currently a placeholder to say lots of orders
                 minimum_amount_per_order = request.POST["min_per_order"]
             )
-            return redirect('/event')
+            return redirect('/restaurantlogin/welcome')
     else:
         return redirect('/')
 

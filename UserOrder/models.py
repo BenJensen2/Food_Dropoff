@@ -6,7 +6,6 @@ from RestaurantMenu.models import Menu
 
 class Order(models.Model):
     user =  models.ForeignKey(User, related_name="orders", on_delete=models.CASCADE)
-    item = models.ManyToManyField(Item, related_name="orders")
     event = models.ForeignKey(Event, related_name="orders", on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)

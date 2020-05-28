@@ -30,10 +30,16 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col text-left">
+                        Notes: {{event.notes}}
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col text-left">
                         Menu:
                     </div>
                 </div>
-                <form action="/user/{{event.id}}/storeOrder" method="POST">
+                <form action="/user/order/{{event.id}}/storeOrder" method="POST">
+                    {% csrf_token %}
                     <div class="row justify-content-center">
                         <div class="col text-left">
                             <table class="table table-striped">
@@ -49,7 +55,7 @@
                                         <td>{{item.item_title}}</td>
                                         <td>{{item.item_description}}</td>
                                         <td>${{item.item_price}}</td>
-                                        <td><input type="number" min="0" value="0" name="item-{{item.id}}"></td>
+                                        <td><input type="number" min="0" value="0" name="{{item.id}}"></td>
                                     </tr>
                                     {% endfor %}    
                                 </tbody>
