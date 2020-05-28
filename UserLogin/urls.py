@@ -7,7 +7,7 @@ urlpatterns = [
     path('',views.index),                               # Home Page
     path('users',views.users),                          # Login Page
     path('users/login',views.login),                    # Login Function
-    path('users/logout',views.logout),                  # Logout Function
+    path('users/logout',views.logout),                  # Logout Function: Redirect to Home Page
     path('users/register',views.register),              # Register Page
     path('users/create',views.create),                  # Create User Function
     path('users/<int:user_id>', views.user_info),       # User Info Page

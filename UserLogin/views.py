@@ -24,7 +24,7 @@ def login(request):
 
 def logout(request):
     request.session.flush()
-    return redirect('/users')
+    return redirect('/')
 
 def register(request):
     return render(request,'user_registration.html')
@@ -51,20 +51,28 @@ def create(request):
         return redirect(f'/users/{user.id}')
 
 def user_info(request,user_id):
-    context = {
-        'events' : Event.objects.all(),
-        'user' : User.objects.get(id=user_id)
-    }
-    return render(request,'user_info.html',context)
+    if 'userID' in request.session:
+        context = {
+            'events' : Event.objects.all(),
+            'user' : User.objects.get(id=user_id)
+        }
+        return render(request,'user_info.html',context)
+    else:
+        messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
+        return redirect('/')
 
 def edit(request,user_id):
-    context = {
-        'user' : User.objects.get(id=user_id)
-    }
-    return render(request,'user_edit.html',context)
+    if 'userID' in request.session:
+        context = {
+            'user' : User.objects.get(id=user_id)
+        }
+        return render(request,'user_edit.html',context)
+    else:
+        messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
+        return redirect('/')
 
 def update(request,user_id):
-
+    if 'userID' in request.session:
     # Not Working: ('btjensen@mtu.edu',)
     # errors = User.objects.update_validator(request.POST)
 
@@ -82,8 +90,15 @@ def update(request,user_id):
     #     user.phone_number = request.POST['phone_number']
     #     user.save()
     #     print('updated')
-    return redirect(f'/users/{user_id}/account')
+        return redirect(f'/users/{user_id}/account')
+    else:
+        messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
+        return redirect('/')
 
 def destroy(request,user_id):
-    User.objects.get(id=user_id).delete()
-    return redirect('/users')
+    if 'userID' in request.session:
+        User.objects.get(id=user_id).delete()
+        return redirect('/users')
+    else:
+        messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
+        return redirect('/')
