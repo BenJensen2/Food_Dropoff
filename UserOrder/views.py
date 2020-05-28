@@ -1,5 +1,11 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from RestaurantEvent.models import *
+from UserOrder.models import *
+from UserLogin.models import *
+from RestaurantItem.models import *
+import math
+
+debug = True
 
 def index(request):
     return HttpResponse('Works')
@@ -16,4 +22,16 @@ def newOrder(request, eventID):
 
 #Path is /user/order/<int:eventID>/storeOrder
 def storeOrder(request, eventID):
-    pass
+    if debug:
+        request.session["userID"] = 1
+    if "userID" in request.session:
+        user = User.objects.get(id=request.session["userID"])
+        event = Event.objects.get(id=eventID)
+        order = Order.objects.create(user = user, event=event, status="Unconfirmed")
+        for item_id, quantity in request.POST.items():
+            if item_id != "csrfmiddlewaretoken":
+                if int(quantity) > 0:
+                    OrderQuantity.objects.create(item=Item.objects.get(id=int(item_id)), order = order, quantity= quantity)
+        return HttpResponse("order submitted")
+    else:
+        return redirect("/")
