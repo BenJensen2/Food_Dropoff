@@ -14,7 +14,7 @@ def index(request):
             request.session.flush()
             return redirect('/')
     elif 'userID' in request.session:
-        return redirect('/userlogin')
+        return redirect('/users ')
     return render(request,'restaurant-login.html')
 
 def register(request):
