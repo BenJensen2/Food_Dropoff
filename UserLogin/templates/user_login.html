@@ -25,7 +25,7 @@
                     <h3>Users</h3>
                 </div>
                 <div class="col text-right">
-                    <a href="/restaurant/login">Restaurants Login</a>
+                    <a href="/restaurantlogin">Restaurants Login</a>
                 </div>
             </div>
         </div>
@@ -33,15 +33,6 @@
         <div class="row justify-content-center">
             <div class="col-6 text-center">
                 <p>Log in to view events and place orders</p>
-                <div class="row">
-                    <div class="col-sm-4 col-form-label"></div>
-                    {% for message in messages %}
-                        {% if message.extra_tags == "login_failed" %}
-                        <span class="col-sm-8 text-danger2"> {{ message|linebreaks }}</span>
-                        {% endif %}
-                    {% endfor %}
-                    <span class="col-sm-8 loginfail"></span>
-                </div>
                 <form class="ajaxform-login" action="/users/login" method="POST">
                     {% csrf_token %}
                     <div class="form-group row">
@@ -56,10 +47,21 @@
                             <input type="password" class="form-control" name="logpassword" id="logpassword">
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-sm-2 col-form-label"></div>
+                        {% for message in messages %}
+                            {% if message.extra_tags == "login" %}
+                            <span class="col-sm-8 text-danger"> {{ message|linebreaks }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
                     <div class="text-center">
                         <button class="btn btn-dark btn-sm" type="submit">Login</button>                  
                     </div>
                 </form>
+
                 <div class="text-center">
                     <a href="/users/register" class="registerlink">Not registered? Sign up to use Food Dropoff for free!</a>
                 </div>
