@@ -62,6 +62,13 @@
                             </table>
                         </div>
                     </div>
+                    {% for message in messages %}
+                        {% if message.extra_tags == "quantity" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
                     <div class="row justify-content-center">
                         <div class="col text-right">
                             <Button type="submit" class="btn btn-primary">Review Order</Button>
