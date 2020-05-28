@@ -6,7 +6,7 @@ from django.contrib import messages
 import datetime
 
 #Used for debugging, turn to true to turn off check if a restaurant is logged in
-debug = True
+debug = False
 
 def index(request):
 
@@ -31,26 +31,31 @@ def createEvent(request):
         else:
             #Get restaurant object that is currently logged in
             restaurant = Restaurant.objects.get(id=request.session['restaurantID'])
-            #Create the location for the event
-            location = Location.objects.create(
-                address = request.POST["address"],
-                city = request.POST["city"],
-                state = request.POST["state"],
-                zip_code = request.POST["zip_code"]
-            )
-            #Create the event
-            Event.objects.create(
-                restaurant = restaurant,
-                menu = restaurant.menus.first(),
-                location= location,
-                date_time = request.POST['date'],
-                notes = request.POST["notes"],
-                status = "In Progress",
-                minimum_orders = request.POST["min_orders"],
-                maximum_orders = 10000, #value is currently a placeholder to say lots of orders
-                minimum_amount_per_order = request.POST["min_per_order"]
-            )
-            return redirect('/restaurantlogin/welcome')
+            #Make sure the restuarant object menu has items
+            if len(restaurant.menus.first().items.all()) < 1:
+                messages.error(request, "Menu does not have any items, please add items to menu before creating event", extra_tags="menu")
+                return redirect("/event/new")
+            else:
+                #Create the location for the event
+                location = Location.objects.create(
+                    address = request.POST["address"],
+                    city = request.POST["city"],
+                    state = request.POST["state"],
+                    zip_code = request.POST["zip_code"]
+                )
+                #Create the event
+                Event.objects.create(
+                    restaurant = restaurant,
+                    menu = restaurant.menus.first(),
+                    location= location,
+                    date_time = request.POST['date'],
+                    notes = request.POST["notes"],
+                    status = "In Progress",
+                    minimum_orders = request.POST["min_orders"],
+                    maximum_orders = 10000, #value is currently a placeholder to say lots of orders
+                    minimum_amount_per_order = request.POST["min_per_order"]
+                )
+                return redirect('/restaurantlogin/welcome')
     else:
         return redirect('/')
 
