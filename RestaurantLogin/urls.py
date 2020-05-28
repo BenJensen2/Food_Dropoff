@@ -15,4 +15,5 @@ urlpatterns = [
     path('ajax-logval',views.testlogin), # ajax login validation
     path('welcome',views.welcome), # render welcome page for valid id
     path('ajax-editval',views.testlogin), # ajax edit validation
+    path('logout',views.logout), # flush session
 ]

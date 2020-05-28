@@ -47,7 +47,7 @@ def orderDetail(request, orderID):
     return redirect('/')
 
 
-def orderDelete(request, orderID):
+def orderCancel(request, orderID):
     # cancel order
     if request.method == 'GET' and not request.is_ajax():
         order = Order.objects.filter(id=orderID)
@@ -57,12 +57,14 @@ def orderDelete(request, orderID):
             if 'restaurantID' in request.session:
                 rid = Order.objects.get(id=orderID).event.restaurant_id
                 if rid == request.session['restaurantID'] and (order.status == 'Received' or order.status == 'Confirmed'):
-                    order.delete()
+                    order.status = 'Cancelled'
+                    order.save()
                     return redirect(f'/RestaurantEvent/{event}')
             elif 'userID' in request.session:
                 uid = Order.objects.get(id=orderID).user_id
                 if uid == request.session['userID'] and order.status == 'Received':
-                    order.delete()
+                    order.status = 'Cancelled'
+                    order.save()
                     return redirect(f'/RestaurantEvent/{event}')
     return redirect('/')
 
