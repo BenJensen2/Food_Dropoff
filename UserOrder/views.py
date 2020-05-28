@@ -32,6 +32,18 @@ def storeOrder(request, eventID):
             if item_id != "csrfmiddlewaretoken":
                 if int(quantity) > 0:
                     OrderQuantity.objects.create(item=Item.objects.get(id=int(item_id)), order = order, quantity= quantity)
-        return HttpResponse("order submitted")
+        return redirect(f"/user/order/{event.id}/{order.id}/review")
     else:
         return redirect("/")
+
+#Path is /user/order/<int:eventID>/<int:orderID>/review
+def reviewOrder(request, eventID, orderID):
+    order = Order.objects.get(id=orderID)
+    event = Event.objects.get(id=eventID)
+    context = {
+        "event": event,
+        "order": order,
+        "itemQuantities": order.quantities.all(),
+        "restaurant": event.restaurant
+    }
+    return render(request, "reviewOrder.html", context)
