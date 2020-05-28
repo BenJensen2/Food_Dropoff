@@ -171,9 +171,16 @@ def welcome(request):
     if 'restaurantID' in request.session:
         restaurant = Restaurant.objects.filter(id=request.session['restaurantID'])
         if restaurant:
+            # restaurant = Restaurant.objects.get(id=1)
             restaurant = Restaurant.objects.get(id=request.session['restaurantID'])
+            id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
+            id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
+
+            print(restaurant.events.all())
             context = {
                 'one_restaurant': restaurant,
+                'id1': id1,
+                'id2': id2,
             }
             return render(request,'restaurant-welcome.html',context)
         else:

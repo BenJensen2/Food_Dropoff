@@ -5,8 +5,10 @@
 }
 
 .container {
-    height: 100vh;
+    /* height: calc(100%vh - 76px); */
+    height: 100%vh;
 }
+
 
 .rightpane,
 .leftpane {
@@ -32,7 +34,7 @@
 }
 
 .message-header {
-	background-color:black;
+	background-color:rgb(65, 65, 77);
 	flex: 0 0 50px;
     width: 100%;
     color: white;
@@ -45,10 +47,15 @@
 }
 
 .message-footer {
-	background-color: black;
+	background-color: rgb(65, 65, 77);
 	display: flex;
-    flex: 0 0 50px;
+    flex: 0 0 80px;
 }
+
+.message-header div {
+    padding-top: 10px;
+}
+
 
 #message {
     width: 100%;
@@ -62,8 +69,28 @@
 
 .msgreceived {
     background-color: lightblue;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .msgsent {
     background-color: lightgrey;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.msgdate {
+    font-size: 10px;
+}
+
+.message-content p {
+    display: block;
+}
+
+.msgbtn {
+    font-size: 12px;
+}
+
+.message-footer {
+    padding: 8px;
 }
