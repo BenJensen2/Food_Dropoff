@@ -60,8 +60,8 @@
                 </tr>
                 {% for event in events %}
                 <tr>
-                    <td><a href="">{{event.restaurant_id.name}}</a></td>
-                    <td>{{event.restaurant_id.cuisine}}</td>
+                    <td><a href="">{{event.restaurant.restaurant_name}}</a></td>
+                    <td>{{event.restaurant.cuisine}}</td>
                     <td><a href="">{{event.date_time}}</a></td>
                 </tr>
                 {% endfor %}
