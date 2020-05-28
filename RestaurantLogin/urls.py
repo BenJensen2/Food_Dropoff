@@ -8,6 +8,7 @@ urlpatterns = [
     path('register',views.register), # render registration form
     path('login',views.login), # process login request
     path('create',views.create), # process registration request
+    path('editroute',views.editroute), # route from navbar to edit form
     path('edit/<int:restaurantID>',views.edit), # render edit account form
     path('update/<int:restaurantID>',views.update), # process registration request
     path('ajax-regval',views.testunique), # ajax reg validation

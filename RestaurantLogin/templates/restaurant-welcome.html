@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/style-restaurant.css' %}">
 </head>
 <body>
+    {% include "navbar.html" %}
     <div class="container">
-        <div class="header">
+        <!-- <div class="header">
             <div class="row justify-content-between">
                 <div class="col">
                     <a href="/">
@@ -29,7 +30,7 @@
                     <a href="/logout">Logout</a>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="row justify-content-center">{{one_restaurant.restaurant_name}}</div>
         <div class="row justify-content-center">
             <div class="col-sm-8">
