@@ -75,7 +75,7 @@ $(".ajaxform-reg").submit(function(e) {
 
     if (!passwordregex(password)) {
         output +=1;
-        $('.errpassword').html('<p>Password must be between 8-20 characters in length and must contain at least one number2</p>');
+        $('.errpassword').html('<p>Password must be between 8-20 characters in length and must contain at least one number. Do not use special characters2</p>');
     }
     
     if (password != confirmpw) {

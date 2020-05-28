@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import Restaurant, RestaurantManager, Event
+from .models import Restaurant, RestaurantManager, Event, Menu
 from Location.models import *
+from UserLogin.models import User
 from django.contrib import messages
 import datetime
 
@@ -114,3 +115,40 @@ def completeEvent(request, eventID):
     event.status = "Completed"
     event.save()
     return redirect(f"/event/{event.id}")
+
+#Route is /event/<int:restaurantID>
+def restaurantPage(request, restaurantID):
+    if 'restaurantID' in request.session:
+        restaurant = Restaurant.objects.filter(id=request.session['restaurantID'])
+        if restaurant:
+            return redirect('/restaurantlogin')
+        else:
+            request.session.flush()
+            return redirect('/')
+    elif 'userID' in request.session:
+        user = User.objects.filter(id=request.session['userID'])
+        restaurant = Restaurant.objects.filter(id=restaurantID)
+        if user and restaurant:
+            user = User.objects.get(id=request.session['userID'])
+            restaurant = Restaurant.objects.get(id=restaurantID)
+            check_events1 = restaurant.events.filter(status="In Progress")
+            check_events2 = restaurant.events.filter(status="Completed")
+            if check_events1:
+                id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
+            else:
+                id1 = -1
+            if check_events2:
+                id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
+            else:
+                id2 = -1
+            
+            context = {
+                'one_restaurant': restaurant,
+                'id1': id1,
+                'id2': id2,
+                'one_menu': Menu.objects.filter(restaurant_id=restaurantID)
+            }
+            return render(request,'/users/eventdetailuser.html',context)
+
+        return redirect('/userlogin')
+    return redirect('/')

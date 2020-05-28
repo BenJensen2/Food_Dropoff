@@ -82,7 +82,7 @@ def login(request):
             for key, value in errors.items():
                 messages.error(request, value, extra_tags=key)
             return redirect('/restaurantlogin')
-        restaurant = Restaurant.objects.filter(email=request.POST['logemail']) 
+        restaurant = Restaurant.objects.filter(email_address=request.POST['logemail']) 
         logged_in = restaurant[0]   
         request.session['restaurantID'] = logged_in.id
         return redirect('/restaurantlogin/welcome')
@@ -173,8 +173,16 @@ def welcome(request):
         if restaurant:
             # restaurant = Restaurant.objects.get(id=1)
             restaurant = Restaurant.objects.get(id=request.session['restaurantID'])
-            id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
-            id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
+            check_events1 = restaurant.events.filter(status="In Progress")
+            check_events2 = restaurant.events.filter(status="Completed")
+            if check_events1:
+                id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
+            else:
+                id1 = -1
+            if check_events2:
+                id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
+            else:
+                id2 = -1
 
             print(restaurant.events.all())
             context = {

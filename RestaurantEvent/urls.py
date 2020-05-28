@@ -10,7 +10,8 @@ urlpatterns = [
     path('<int:eventID>/edit', views.editEvent),
     path('<int:eventID>/update', views.updateEvent),
     path('<int:eventID>', views.viewEvent),
-    path('<int:eventID>/complete', views.completeEvent)
+    path('<int:eventID>/complete', views.completeEvent),
+    path('<int:restaurantID>', views.restaurantPage), #restaurant detail page for users
     # path('restaurant_event/<int:show_id>', views.show_info),
     # path('restaurant_event/<int:show_id>/edit', views.edit),
     # path('restaurant_event/<int:show_id>/edit/update', views.update),
