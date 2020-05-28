@@ -57,6 +57,7 @@ class EventManager(models.Manager):
             errors["min_per_order"] = "Please specify a minimum per order cost"
         elif int(postData["min_per_order"]) < 0:
             errors["min_per_order"] = "Minimum per order cost must be greater than 0"
+        #Make sure the menu has items
         return errors
 
 class Event(models.Model):
