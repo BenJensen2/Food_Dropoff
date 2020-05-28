@@ -95,7 +95,7 @@ def updateEvent(request, eventID):
             event.minimum_orders = request.POST["min_orders"]
             event.minimum_amount_per_order = request.POST["min_per_order"]
             event.save()
-        return redirect(f"/event/{eventID}/edit")
+        return redirect(f"/event/{eventID}")
     else:
         return redirect("/")
 
@@ -106,7 +106,7 @@ def viewEvent(request, eventID):
         "event": event,
         "orders": event.orders.all()
     }
-    return render(request, "viewEvent.html", context)
+    return render(request, "eventDetail.html", context)
 
 #Route is /event/<int:eventID>/complete
 def completeEvent(request, eventID):
