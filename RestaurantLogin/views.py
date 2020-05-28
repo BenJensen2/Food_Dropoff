@@ -30,6 +30,21 @@ def register(request):
         return redirect('/userlogin')
     return render(request,'restaurant-registration.html')
 
+def editroute(request):
+    # route with restaurant id to edit form
+    if 'restaurantID' in request.session:
+        restaurant = Restaurant.objects.filter(id=request.session['restaurantID'])
+        if restaurant:
+            restaurant = Restaurant.objects.get(id=request.session['restaurantID'])
+            return redirect(f'/restaurantlogin/edit/{restaurant.id}')
+        else:
+            request.session.flush()
+            return redirect('/')
+    elif 'userID' in request.session:
+        return redirect('/userlogin')
+    return redirect('/')
+    
+
 def edit(request, restaurantID):
     # render edit account form
     if 'restaurantID' in request.session:

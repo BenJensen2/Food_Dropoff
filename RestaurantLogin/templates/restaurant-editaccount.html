@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/style-restaurant.css' %}">
 </head>
 <body>
+    {% include "navbar.html" %}
     <div class="container">
-        <div class="header">
+        <!-- <div class="header">
             <div class="row justify-content-between">
                 <div class="col">
                     <a href="/">
@@ -28,7 +29,7 @@
                     Account | Logout
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="row justify-content-center">
             <div class="col-6 text-center">
                 <p>Edit Account Detail</p>
@@ -249,7 +250,7 @@
                         <span class="col-sm-8 text-danger errconfirmpw"></span>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-dark btn-sm" type="submit">Register</button>
+                        <button class="btn btn-dark btn-sm" type="submit">Update</button>
                         <a class="btn btn-dark btn-sm" href="/restaurantlogin/welcome" role="button">Cancel</a>                      
                     </div>
                 </form>
