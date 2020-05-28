@@ -15,10 +15,4 @@ urlpatterns = [
     path('ajax-logval',views.testlogin), # ajax login validation
     path('welcome',views.welcome), # render welcome page for valid id
     path('ajax-editval',views.testlogin), # ajax edit validation
-    
-    # path('restaurant_login/new', views.new),
-    # path('restaurant_login/<int:show_id>', views.show_info),
-    # path('restaurant_login/<int:show_id>/edit', views.edit),
-    # path('restaurant_login/<int:show_id>/edit/update', views.update),
-    # path('restaurant_login/<int:show_id>/destroy', views.destroy),
 ]
