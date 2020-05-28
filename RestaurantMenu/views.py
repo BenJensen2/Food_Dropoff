@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import Menu, Item
 from RestaurantLogin.models import *
 
-debug = True
+debug = False
 
 def index(request):
     context = {
@@ -38,6 +38,17 @@ def addItem(request):
         menu = Menu.objects.get(id = request.POST["menuID"])
         item = Item.objects.create(item_title = request.POST["item"], item_description = request.POST["description"], item_price = request.POST["price"], restaurant = restaurant)
         menu.items.add(item)
+        return redirect("/menu/new")
+    else:
+        return redirect("/")
+
+#Path is /menu/new/<int:itemID>/removeItem
+def removeItem(request, itemID):
+    if debug:
+        request.session["restaurantID"] = 1
+    if "restaurantID" in request.session:
+        item = Item.objects.get(id=itemID)
+        item.delete()
         return redirect("/menu/new")
     else:
         return redirect("/")

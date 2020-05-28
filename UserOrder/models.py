@@ -4,6 +4,16 @@ from RestaurantItem.models import Item
 from RestaurantEvent.models import Event
 from RestaurantMenu.models import Menu
 
+class OrderQuantityManager(models.Manager):
+    def validator(self, postData):
+        errors = {}
+        #Make sure quantities are numbers and non negative
+        for item_id, quantity in postData:
+            if item_id != "csrfmiddlewaretoken":
+                if not quantity.isdigit():
+                    errors["quantity"] = "Make sure all item quantities are positive integers"
+        return errors
+
 class Order(models.Model):
     user =  models.ForeignKey(User, related_name="orders", on_delete=models.CASCADE)
     event = models.ForeignKey(Event, related_name="orders", on_delete=models.CASCADE)
@@ -17,3 +27,4 @@ class OrderQuantity(models.Model):
     quantity = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = OrderQuantityManager()

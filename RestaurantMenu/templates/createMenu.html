@@ -25,6 +25,7 @@
                             <th>Item</th>
                             <th>Description</th>
                             <th>Price</th>
+                            <th></th>
                         </thead>
                         <tbody>
                             {% for item in menu.items.all %}
@@ -32,6 +33,7 @@
                                 <td>{{item.item_title}}</td>
                                 <td>{{item.item_description}}</td>
                                 <td>${{item.item_price|floatformat:2}}</td>
+                                <td><a href="/menu/new/{{item.id}}/removeItem" name="itemID"">Delete</a></td>
                             </tr>
                             {% endfor %}
                             <tr>
@@ -43,11 +45,8 @@
                     </table>
                     <div class="row">
                         <input type="text" value="{{menu.id}}" name="menuID" hidden>
-                        <div class="col text-left">
-                            <button type="submit" class="btn btn-primary">Add Item</button>
-                        </div>
                         <div class="col text-right">
-                            <a href="/restaurantlogin/welcome" class="btn btn-primary">Create Menu</a>
+                            <button type="submit" class="btn btn-primary">Add Item</button>
                         </div>
                     </div>
                 </form>

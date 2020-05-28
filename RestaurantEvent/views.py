@@ -116,6 +116,7 @@ def completeEvent(request, eventID):
     event.save()
     return redirect(f"/event/{event.id}")
 
+
 #Route is /event/<int:restaurantID>
 def restaurantPage(request, restaurantID):
     if 'restaurantID' in request.session:
@@ -152,3 +153,26 @@ def restaurantPage(request, restaurantID):
 
         return redirect('/userlogin')
     return redirect('/')
+
+#Route is /event/<int:eventID>/delete
+def cancelEvent(request, eventID):
+    if debug:
+        request.session["restaurantID"] = 1
+    if "restaurantID" in request.session:
+        event = Event.objects.get(id=eventID)
+        #Make sure cancelling restaurant owns the event
+        if event.restaurant.id == request.session["restaurantID"]:
+            #Set event to cancelled
+            event.status = "Cancelled"
+            event.save()
+            #Cancel all orders associated with event
+            orders = event.orders.all()
+            for order in orders:
+                order.status = "Cancelled"
+                order.save()
+            return redirect("/restaurantlogin/welcome")
+        else:
+            return redirect("/")
+    else:
+        return redirect("/")
+
