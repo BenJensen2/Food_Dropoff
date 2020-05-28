@@ -51,16 +51,24 @@
                                         <td>{{item.item.item_title}}</td>
                                         <td>{{item.item.item_description}}</td>
                                         <td>${{item.item.item_price}}</td>
-                                        <td><input type="number" min="0" value="{{item.quantity}}" name="{{item.item.id}}"></td>
+                                        <td>{{item.quantity}}</td>
                                     </tr>
                                     {% endfor %}    
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col text-right my-3">
+                            <h3>Total: ${{total}}</h3>
+                        </div>
+                    </div>
                     <div class="row justify-content-center">
+                        <div class="col">
+                            <a class="btn btn-outline-primary" href="/user/order/{{event.id}}/{{order.id}}/change">Edit Order</a>
+                        </div>
                         <div class="col text-right">
-                            <Button type="submit" class="btn btn-primary">Place Order</Button>
+                            <a class="btn btn-primary" href="/users/{{user.id}}">Place Order</a>
                         </div>
                     </div>
                 </form>

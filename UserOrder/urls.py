@@ -7,7 +7,8 @@ urlpatterns = [
     path('user_order',views.index),
     path('<int:eventID>/new', views.newOrder),
     path('<int:eventID>/storeOrder', views.storeOrder),
-    path('<int:eventID>/<int:orderID>/review', views.reviewOrder)
+    path('<int:eventID>/<int:orderID>/review', views.reviewOrder),
+    path('<int:eventID>/<int:orderID>/change', views.changeOrder)
     # path('user_order/new', views.new),
     # path('user_order/new/create',views.create),
     # path('user_order/<int:show_id>', views.show_info),

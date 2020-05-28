@@ -36,14 +36,30 @@ def storeOrder(request, eventID):
     else:
         return redirect("/")
 
+
 #Path is /user/order/<int:eventID>/<int:orderID>/review
 def reviewOrder(request, eventID, orderID):
+    if debug:
+        request.session["userID"] = 1
     order = Order.objects.get(id=orderID)
     event = Event.objects.get(id=eventID)
+    user = User.objects.get(id=request.session["userID"])
+    #Calculate total
+    total = 0
+    for item in order.quantities.all():
+        total += item.item.item_price * item.quantity
     context = {
         "event": event,
         "order": order,
         "itemQuantities": order.quantities.all(),
-        "restaurant": event.restaurant
+        "restaurant": event.restaurant,
+        "user": user,
+        "total": '{:.2f}'.format(total)
     }
     return render(request, "reviewOrder.html", context)
+
+#Path is /user/order/<int:eventID>/<int:orderID>/change
+def changeOrder(request, eventID, orderID):
+    order = Order.objects.get(id=orderID)
+    order.delete()
+    return redirect(f"/user/order/{eventID}/new")
