@@ -16,6 +16,13 @@
                 <div class="row justify-content-center">
                     <h1>Create A New Event</h1>
                 </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == "menu" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
                 <form action="/event/new/create" method="POST">
                     {% csrf_token %}
                     {% for message in messages %}
