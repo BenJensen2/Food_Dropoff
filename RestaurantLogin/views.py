@@ -3,6 +3,7 @@ from .models import *
 from django.contrib import messages
 from django.http import JsonResponse
 from RestaurantEvent.models import Event
+from RestaurantMenu.models import *
 
 def index(request):
     # render login form
@@ -122,9 +123,11 @@ def create(request):
             email_address=request.POST['email'],
             password=pw_hash,
             location_id=newlocation.id
-        )        
+        )
+        #Create new restaurant by default and then redirect to menu page to start populating
+        Menu.objects.create(name="Default", restaurant = newrestaurant)
         request.session['restaurantID'] = newrestaurant.id
-        return redirect('/restaurantlogin/welcome')
+        return redirect('/menu/new')
     return redirect('/')
 
 def update(request, restaurantID):
