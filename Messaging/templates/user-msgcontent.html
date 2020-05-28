@@ -1,0 +1,28 @@
+
+    {% load tz %}
+    {% for message in order_messages %}
+        {% ifchanged message.created_at|timezone:"US/Pacific"|date:"j" %}
+            <div class="row addrow"></div>
+        {% endifchanged %}
+        {% if message.sent_by == 'restaurant' %}
+        <div class="text-left">
+            <div class="text-left">
+                <p class="text-left">
+                    <span class="msgreceived">{{message.message}}</span></p>
+                <p class="text-left msgdate">
+                    Sent {{message.created_at|timezone:"US/Pacific"|date:'F j, Y h:i A' }} PST
+                </p>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-right">
+            <div class="text-right">
+                <p class="text-right">
+                    <span class="msgsent">{{message.message}}</span></p>
+                <p class="text-right msgdate">
+                    Sent {{message.created_at|timezone:"US/Pacific"|date:'F j, Y h:i A' }} PST
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}

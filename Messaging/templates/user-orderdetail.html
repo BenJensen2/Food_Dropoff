@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/style-restaurant.css' %}">
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="container">
-        <div class="header">
+        <!-- <div class="header">
             <div class="row justify-content-between">
                 <div class="col">
                     <a href="/">
@@ -29,7 +30,7 @@
                     <a href="/logout">Logout</a>
                 </div>
             </div>
-        </div>
+        </div> -->
         
         <div class="main justify-content-center">
             <div class="leftpane">
@@ -80,9 +81,9 @@
                                     <tbody>
                                         {% for j in one_order.quantities.all %}
                                         <tr>
-                                            <td>j.item.item_title</td>
-                                            <td>j.quantity</td>
-                                            <td>j.item.item_price</td>
+                                            <td>{{j.item.item_title}}</td>
+                                            <td>{{j.quantity}}</td>
+                                            <td>{{j.item.item_price}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -108,7 +109,7 @@
                         {% if one_order.status != 'Completed' or one_order.status != 'Cancelled' %}
                         <div class="row">
                             <div class="col col-sm-12 text-center">
-                                <a href="#" class="ajax-message">Send a message to {{one_order.event.restaurant.name}}</a>
+                                <a href="#" class="ajax-message">Send a message to {{one_order.event.restaurant.restaurant_name}}</a>
                             </div>
                         </div>
                         {% endif %}

@@ -69,6 +69,8 @@
 
 .msgreceived {
     background-color: lightblue;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .msgsent {
