@@ -5,7 +5,7 @@ from django.contrib import messages
 import datetime
 
 #Used for debugging, turn to true to turn off check if a restaurant is logged in
-debug = False
+debug = True
 
 def index(request):
 
@@ -114,3 +114,25 @@ def completeEvent(request, eventID):
     event.status = "Completed"
     event.save()
     return redirect(f"/event/{event.id}")
+
+#Route is /event/<int:eventID>/delete
+def cancelEvent(request, eventID):
+    if debug:
+        request.session["restaurantID"] = 1
+    if "restaurantID" in request.session:
+        event = Event.objects.get(id=eventID)
+        #Make sure cancelling restaurant owns the event
+        if event.restaurant.id == request.session["restaurantID"]:
+            #Set event to cancelled
+            event.status = "Cancelled"
+            event.save()
+            #Cancel all orders associated with event
+            orders = event.orders.all()
+            for order in orders:
+                order.status = "Cancelled"
+                order.save()
+            return redirect("/restaurantlogin/welcome")
+        else:
+            return redirect("/")
+    else:
+        return redirect("/")
