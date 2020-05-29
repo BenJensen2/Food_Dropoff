@@ -8,7 +8,8 @@ class OrderQuantityManager(models.Manager):
     def validator(self, postData):
         errors = {}
         #Make sure quantities are numbers and non negative
-        for item_id, quantity in postData:
+        print(postData)
+        for item_id, quantity in postData.items():
             if item_id != "csrfmiddlewaretoken":
                 if not quantity.isdigit():
                     errors["quantity"] = "Make sure all item quantities are positive integers"
