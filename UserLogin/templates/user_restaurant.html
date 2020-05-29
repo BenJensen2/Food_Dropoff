@@ -15,7 +15,8 @@
         
         <div class="row justify-content-center">
             <div class="col-sm-8">
-            {% if one_restaurant.events.all|length == 0 %}
+
+                {% if one_restaurant.events.all|length == 0 %}
                 <p class="text-center">{{one_restaurant.restaurant_name}} does not have any events yet.</p>
                 {% else %}
                 <div class="accordion" id="upcomingevents">

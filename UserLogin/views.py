@@ -69,16 +69,27 @@ def create(request):
 def user_info(request,user_id):
     if 'userID' in request.session:
         user = User.objects.get(id=user_id)
+        orders1 = user.orders.all().filter(status="In Progress")
+        orders2 = user.orders.all().filter(status="Unconfirmed")
+        orders3 = user.orders.all().filter(status="Completed")
+        print(orders1)
+        print(orders2)
+        print(orders3)
         events = Event.objects.all().order_by("date_time")
-        print(user)
-        print(user.orders.all())
-        print(events)
         context = {
+            'orders1' : orders1,
+            'orders2' : orders2,
+            'orders3' : orders3,
             'events' : events,
             'user' : user,
             'orders' : user.orders.all()
         }
         return render(request,'user_info.html',context)
+
+
+
+
+
     else:
         messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
         return redirect('/')
