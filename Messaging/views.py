@@ -65,7 +65,7 @@ def orderCancel(request, orderID):
                 if uid == request.session['userID'] and order.status == 'Received':
                     order.status = 'Cancelled'
                     order.save()
-                    return redirect(f'/event/{event}')
+                    return redirect(f'/users')
     return redirect('/')
 
 def orderConfirm(request, orderID):
