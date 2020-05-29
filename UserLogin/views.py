@@ -69,18 +69,8 @@ def create(request):
 def user_info(request,user_id):
     if 'userID' in request.session:
         user = User.objects.get(id=user_id)
-        orders1 = user.orders.all().filter(status="In Progress")
-        orders2 = user.orders.all().filter(status="Unconfirmed")
-        orders3 = user.orders.all().filter(status="Completed")
-        print(orders1)
-        print(orders2)
-        print(orders3)
-        events = Event.objects.all().order_by("date_time")
         context = {
-            'orders1' : orders1,
-            'orders2' : orders2,
-            'orders3' : orders3,
-            'events' : events,
+            'events' : Event.objects.all().order_by("date_time"),
             'user' : user,
             'orders' : user.orders.all()
         }

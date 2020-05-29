@@ -42,7 +42,8 @@
                 <div class="col-sm-12">
                     <div class="accordion" id="upcomingevents">
                         {% load tz %}
-                        {% for order in orders1|dictsort:"created_at" %}
+                        {% for order in orders|dictsort:"created_at" %}
+                        {% if order.status == "In Progress" or order.status == "Uncomfirmed" or order.status == "Received" %}
                         <div class="card">
                             <div class="card-header" id="heading{{i.id}}">
                                 <h2 class="mb-0">
@@ -57,36 +58,12 @@
                                     <p class="text-left">Date: {{order.event.date_time|timezone:"US/Pacific"|date:'F j, Y'}}</p>
                                     <p class="text-left">Location: {{order.event.location}}</p>
                                     <p class="text-left">Time: {{order.event.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                    <p class="text-left">Price: </p>
+                                    <p class="text-left">Price: {{order.total_price}}</p>
                                     <p class="text-right"><a href="/user/order/{{i.id}}/new">View/Place Order</a></p>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
-                    </div>
-
-                    <div class="accordion" id="upcomingevents">
-                        {% load tz %}
-                        {% for order in orders2|dictsort:"created_at" %}
-                        <div class="card">
-                            <div class="card-header" id="heading{{i.id}}">
-                                <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{i.id}}" aria-expanded="true" aria-controls="collapse{{i.id}}">
-                                    {{order.event.restaurant.restaurant_name}} - ({{order.status}})
-                                </button>
-                                </h2>
-                            </div>
-                        
-                            <div id="collapse{{i.id}}" class="collapse {%if i.id == id1 %}show{% endif %}" aria-labelledby="heading{{i.id}}" data-parent="#upcomingevents">
-                                <div class="card-body">
-                                    <p class="text-left">Date: {{order.event.date_time|timezone:"US/Pacific"|date:'F j, Y'}}</p>
-                                    <p class="text-left">Location: {{order.event.location}}</p>
-                                    <p class="text-left">Time: {{order.event.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                    <p class="text-left">Price: </p>
-                                    <p class="text-right"><a href="/user/order/{{i.id}}/new">View/Place Order</a></p>
-                                </div>
-                            </div>
-                        </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
 
@@ -96,7 +73,8 @@
                 <div class="col-sm-12">
                     <div class="accordion" id="upcomingevents">
                         {% load tz %}
-                        {% for order in orders3|dictsort:"created_at" %}
+                        {% for order in orders|dictsort:"created_at" %}
+                        {% if order.status == "Completed" %}
                         <div class="card">
                             <div class="card-header" id="heading{{i.id}}">
                                 <h2 class="mb-0">
@@ -111,11 +89,12 @@
                                     <p class="text-left">Date: {{order.event.date_time|timezone:"US/Pacific"|date:'F j, Y'}}</p>
                                     <p class="text-left">Location: {{order.event.location}}</p>
                                     <p class="text-left">Time: {{order.event.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                    <p class="text-left">Price: </p>
+                                    <p class="text-left">Price: {{order.total_price}}</p>
                                     <p class="text-right"><a href="/user/order/{{i.id}}/new">View/Place Order</a></p>
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>          
