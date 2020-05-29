@@ -212,7 +212,7 @@ $(".ajaxform-edit").submit(function(e) {
 
     if (password.length > 0 && !passwordregex(password)) {
         output +=1;
-        $('.errpassword').html('<p>Password must be between 8-20 characters in length and must contain at least one number2</p>');
+        $('.errpassword').html('<p>Password must be between 8-20 characters in length and must contain at least one number, one lowercase character, one uppercase character, and one special character2</p>');
     }
     
     if (password != confirmpw) {
@@ -255,6 +255,8 @@ function emailregex(email) {
 }
 
 function passwordregex(password) {
-    var re2= /^(?=.*\d)[a-zA-Z\d]{8,20}$/;
+    var re2= /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return re2.test(password);
 }
+
+// ^(?=.*\d)[a-zA-Z\d]{8,20}$   old password regex
