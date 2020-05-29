@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from RestaurantEvent.models import Event
+from RestaurantMenu.models import Menu
 from RestaurantLogin.models import Restaurant
 from .models import User, UserManager
 from django.contrib import messages
