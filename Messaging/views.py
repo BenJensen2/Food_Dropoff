@@ -59,13 +59,13 @@ def orderCancel(request, orderID):
                 if rid == request.session['restaurantID'] and (order.status == 'Received' or order.status == 'Confirmed'):
                     order.status = 'Cancelled'
                     order.save()
-                    return redirect(f'/RestaurantEvent/{event}')
+                    return redirect(f'/event/{event}')
             elif 'userID' in request.session:
                 uid = Order.objects.get(id=orderID).user_id
                 if uid == request.session['userID'] and order.status == 'Received':
                     order.status = 'Cancelled'
                     order.save()
-                    return redirect(f'/RestaurantEvent/{event}')
+                    return redirect(f'/event/{event}')
     return redirect('/')
 
 def orderConfirm(request, orderID):
@@ -79,7 +79,7 @@ def orderConfirm(request, orderID):
                 if rid == request.session['restaurantID'] and (order.status == 'Received'):
                     order.status = 'Confirmed'
                     order.save()
-                    Message.object.create(order_id=orderID,sent_by='restaurant',message=f'{order.event.restaurant.name} has confirmed order {order.id}.')
+                    Message.objects.create(order_id=orderID,sent_by='restaurant',message=f'{order.event.restaurant.restaurant_name} has confirmed order {order.id}.')
                     context = {
                         'one_order': Order.objects.get(id=orderID),
                     }
@@ -160,31 +160,3 @@ def sendMessage(request):
                     }
                     return render(request,'user-messages.html', context)
     return redirect('/')
-
-    # Restaurants
-    #     - [method] Render order detail page for restaurant - orderDetail
-    #           - current oid in context
-    #     - [method with ajax call] confirm order - orderConfirm
-    #           - update record in order table
-    #           - current oid in context
-    #           - change status and button/link (confirm link should disappear)
-    #     - [method] cancel order - orderDelete
-    #           - delete record in order table
-    #           - redirect to eventdetail
-    #     - [jquery] open message window, reload with timer - loadMessage
-    #           - load partial html into message div
-    #     - [method with ajax call] send message to user - sendMessage
-    #           - create new record in message table with sent_by='restaurant'
-    #           - load partial html into message div
-
-    # Users
-    #     - [method] Render order detail page for User - orderDetail
-    #           - current oid in context
-    #     - [method] cancel order - orderDelete
-    #           - delete record in order table
-    #           - redirect to eventdetail
-    #     - [jquery] open message window, reload with timer - loadMessage
-    #           - load partial html into message div
-    #     - [method with ajax call] send message to Restaurants - sendMessage
-    #           - create new record in message table with sent_by='user'
-    #           - load partial html into message div

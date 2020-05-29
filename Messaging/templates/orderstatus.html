@@ -3,7 +3,7 @@
     {% if one_order.status == 'Received' %}
     <a href="/messaginng/confirm" role="button" class="btn btn-outline-dark btn-sm">Confirm</a>
     {% endif %}
-    {% if one_order.status == 'Received' or one_order.status == 'Confirmed'}
+    {% if one_order.status == 'Received' or one_order.status == 'Confirmed' %}
     <a href="#" role="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#cancelorder">Cancel</a>
     {% endif %}
 </span>
