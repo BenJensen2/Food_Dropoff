@@ -24,7 +24,7 @@ def users(request):
         else:
             request.session.flush()
             return redirect('/')
-    return render(request,'/')
+    return render(request,'user_login.html')
 
 def login(request):
     errors = User.objects.login_validator(request.POST)
@@ -135,3 +135,20 @@ def restaurant(request,restaurantID):
     else:
         messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
         return redirect('/')
+
+def editroute(request):
+    if 'userID' in request.session:
+        user = User.objects.filter(id=request.session['userID'])
+        if user:
+            return redirect(f"/users/{request.session['userID']}/account")
+        else:
+            request.session.flush()
+            return redirect('/')
+    elif 'restaurantID' in request.session:
+        restaurant = Restaurant.objects.filter(id=request.session['restaurantID'])
+        if restaurant:
+            return redirect('/restaurantlogin/welcome')
+        else:
+            request.session.flush()
+            return redirect('/')
+    return render(request,'/')
