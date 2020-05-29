@@ -67,9 +67,15 @@ def create(request):
 
 def user_info(request,user_id):
     if 'userID' in request.session:
+        user = User.objects.get(id=user_id)
+        events = Event.objects.all().order_by("date_time")
+        print(user)
+        print(user.orders)
+        print(events)
         context = {
-            'events' : Event.objects.all().order_by("date_time"),
-            'user' : User.objects.get(id=user_id)
+            'events' : events,
+            'user' : user,
+            'orders' : user.orders
         }
         return render(request,'user_info.html',context)
     else:
