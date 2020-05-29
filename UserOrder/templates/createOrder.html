@@ -55,7 +55,7 @@
                                         <td>{{item.item_title}}</td>
                                         <td>{{item.item_description}}</td>
                                         <td>${{item.item_price}}</td>
-                                        <td><input type="number" min="0" value="0" name="{{item.id}}"></td>
+                                        <td><input class="quantity" price="{{item.item_price}}" type="number" min="0" value="0" name="{{item.id}}"></td>
                                     </tr>
                                     {% endfor %}    
                                 </tbody>
@@ -70,6 +70,9 @@
                         {% endif %}
                     {% endfor %}
                     <div class="row justify-content-center">
+                        <div class="col text-left">
+                            <h3 id="total">Total: $0.00</h3>
+                        </div>
                         <div class="col text-right">
                             <Button type="submit" class="btn btn-primary">Review Order</Button>
                         </div>
@@ -83,5 +86,21 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    <script>
+        function getTotal(){
+            total = 0;
+            //Get all fields and values
+            $('.quantity').each(function(){
+                console.log($(this).attr("price") + " " + $(this).val());
+                total += parseFloat($(this).attr("price")) * parseFloat($(this).val());
+            });
+            return total.toFixed(2);
+        }
+
+        $('.quantity').click(function(response){
+            console.log("value changed");
+            $('#total').html( "Total: $"+getTotal())
+        })
+    </script>
 </body>
 </html>
