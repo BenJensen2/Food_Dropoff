@@ -167,7 +167,7 @@ def restaurant(request,restaurantID):
                 'id2': id2,
                 'one_menu': Menu.objects.filter(restaurant_id=restaurantID)
             }
-            return render(request,'eventdetailuser.html',context)
+            return render(request,'user_restaurant.html',context)
 
         return redirect('/userlogin')
     return redirect('/')
