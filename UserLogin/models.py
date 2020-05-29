@@ -98,7 +98,8 @@ class UserManager(models.Manager):
         
         # Need to use unique but allow user repeat 
         # elif user:
-        #     errors['email'] = "Please use another email address."
+        #     if not postData['email'] == request.session['user_email']:
+        #         errors['email'] = "Please use another email address."
 
         # Password Validations
         PASS_REGEX = re.compile(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$")
