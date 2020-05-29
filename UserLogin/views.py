@@ -105,24 +105,24 @@ def edit(request,user_id):
         return redirect('/')
 
 def update(request,user_id):
-    if 'userID' in request.session:
-    # Not Working: ('btjensen@mtu.edu',)
-    # errors = User.objects.update_validator(request.POST)
+    # if 'userID' in request.session:
+    #     # Not Working: ('btjensen@mtu.edu',)
+    #     errors = User.objects.update_validator(request.POST)
 
-    # if len(errors) > 0:
-    #     for key, value in errors.items():
-    #         messages.error(request,value,extra_tags=key)
-    #     return redirect(f'/users/{user_id}/account')
-    # else:
-    #     password_encoded = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
-    #     user = User.objects.get(id=user_id)
-    #     user.first_name = request.POST['first_name'],
-    #     user.last_name = request.POST['last_name'],
-    #     user.email = request.POST['email'],
-    #     user.password = password_encoded,
-    #     user.phone_number = request.POST['phone_number']
-    #     user.save()
-    #     print('updated')
+    #     if len(errors) > 0:
+    #         for key, value in errors.items():
+    #             messages.error(request,value,extra_tags=key)
+    #         return redirect(f'/users/{user_id}/account')
+    #     else:
+    #         password_encoded = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
+    #         user = User.objects.get(id=user_id)
+    #         user.first_name = request.POST['first_name'],
+    #         user.last_name = request.POST['last_name'],
+    #         user.email = request.POST['email'],
+    #         user.password = password_encoded,
+    #         user.phone_number = request.POST['phone_number']
+    #         user.save()
+    #         print('updated')
         return redirect(f'/users/{user_id}/account')
     else:
         messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
