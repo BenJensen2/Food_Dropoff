@@ -45,7 +45,7 @@
                         <a data-toggle="collapse" data-parent="#accordionEx" href="#collapse{{order.id}}" aria-expanded="true"
                             aria-controls="collapse{{order.id}}">
                             <h5 class="mb-0">
-                            {{order.user.first_name}} {{order.user.last_name}} <span id="orderStatus">({{order.status}})</span><i class="fas fa-angle-down rotate-icon"></i>
+                            {{order.user.first_name}} {{order.user.last_name}} <span id="orderStatus" order="{{order.id}}">({{order.status}})</span><i class="fas fa-angle-down rotate-icon"></i>
                             </h5>
                         </a>
                         </div>
@@ -62,19 +62,19 @@
                             <div class="input-group">
                                 <div class="form-check">
                                     <label for="">Received</label>
-                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Received" >
+                                    <input class="status" type="radio" name="{{order.id}}" value="Received" {% if order.status == "Received" %} checked="checked" {% endif %} >
                                 </div>
                                 <div class="form-check">
                                     <label for="">Confirmed</label>
-                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Confirmed" >
+                                    <input class="status" type="radio" name="{{order.id}}" value="Confirmed" {% if order.status == "Confirmed" %} checked="checked" {% endif %}  >
                                 </div>
                                 <div class="form-check">
                                     <label for="">Cancelled</label>
-                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Cancelled" >
+                                    <input class="status" type="radio" name="{{order.id}}" value="Cancelled" {% if order.status == "Cancelled" %} checked="checked" {% endif %} >
                                 </div>
                                 <div class="form-check">
                                     <label for="">Completed</label>
-                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Completed" >
+                                    <input class="status" type="radio" name="{{order.id}}" value="Completed" {% if order.status == "Completed" %} checked="checked" {% endif %}  >
                                 </div>
                             </div>
                             <div class="row">
@@ -133,8 +133,14 @@
     <script>
         //Update order status when pressing radio button
         $(document).on("click",".status", function(response){
-            console.log("Status clicked " + $(this).val() + $(this).attr("name"));
+            orderID = $(this).parent().parent().parent().parent().parent().find('#orderStatus').attr("order")
             console.log($(this).parent().parent().parent().parent().parent().find('#orderStatus').html("("+$(this).val()+")"));
+            $.get({
+                url: '/user/order/{{event.id}}/'+ orderID +'/status/'+ $(this).val() +'/update',
+                success: function(response){
+                    console.log("updated order {{order.id}}")
+                }
+            })
         })
     </script>
 </body>

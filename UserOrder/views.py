@@ -34,7 +34,7 @@ def storeOrder(request, eventID):
         else:
             user = User.objects.get(id=request.session["userID"])
             event = Event.objects.get(id=eventID)
-            order = Order.objects.create(user = user, event=event, status="Unconfirmed")
+            order = Order.objects.create(user = user, event=event, status="Received")
             for item_id, quantity in request.POST.items():
                 if item_id != "csrfmiddlewaretoken":
                     if int(quantity) > 0:
@@ -70,3 +70,17 @@ def changeOrder(request, eventID, orderID):
     order = Order.objects.get(id=orderID)
     order.delete()
     return redirect(f"/user/order/{eventID}/new")
+
+#Path is /user/order/<int:eventID>/<int:orderID>/status/<string:status/update
+def updateOrderStatus(request,eventID, orderID, status):
+    if "restaurantID" in request.session:
+        event = Event.objects.get(id=eventID)
+        #Make sure restaurant that is logged in is the same as the restaurant of the event
+        if request.session["restaurantID"] == event.restaurant.id:
+            #update status
+            order = Order.objects.get(id=orderID)
+            order.status = status
+            order.save()
+            return HttpResponse("Successfully updated order")
+    else:
+        return redirect("/")
