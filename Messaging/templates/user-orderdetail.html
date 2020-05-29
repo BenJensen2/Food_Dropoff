@@ -36,8 +36,8 @@
             <div class="leftpane">
                 {% load tz %}
                 <div class="row justify-content-center">
-                    <div class="col-6 text-center">
-                        <p>{{one_order.event.date_time|timezone:"US/Pacific"|date:'F j, Y' }}</p>
+                    <div class="col-8 text-center">
+                        <p class="title">Event Date: {{one_order.event.date_time|timezone:"US/Pacific"|date:'F j, Y' }}</p>
                         <div class="row">
                             <div class="col col-sm-4 text-left">
                                 Order ID:
@@ -107,9 +107,9 @@
                             </div>
                         </div>
                         {% if one_order.status != 'Completed' or one_order.status != 'Cancelled' %}
-                        <div class="row">
+                        <div class="row msg-linkdiv">
                             <div class="col col-sm-12 text-center">
-                                <a href="#" class="ajax-message" orderid="{{one_order.id}}" fname="{{one_urser.user.first_name}}">Send a message to {{one_order.event.restaurant.restaurant_name}}</a>
+                                <a href="#" class="ajax-message msg-linkstyle" orderid="{{one_order.id}}" fname="{{one_urser.user.first_name}}">Send a message to {{one_order.event.restaurant.restaurant_name}}</a>
                             </div>
                         </div>
                         {% endif %}

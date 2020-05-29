@@ -34,7 +34,7 @@
 }
 
 .message-header {
-	background-color:rgb(65, 65, 77);
+	background-color:rgb(100, 123, 145);
 	flex: 0 0 50px;
     width: 100%;
     color: white;
@@ -47,7 +47,7 @@
 }
 
 .message-footer {
-	background-color: rgb(65, 65, 77);
+	background-color: rgb(100, 123, 145);
 	display: flex;
     flex: 0 0 80px;
 }
@@ -68,15 +68,17 @@
 }
 
 .msgreceived {
-    background-color: lightblue;
+    background-color: rgb(175, 207, 218);
     padding: 5px;
     border-radius: 5px;
+    font-size: 14px;
 }
 
 .msgsent {
-    background-color: lightgrey;
+    background-color: rgb(226, 220, 220);
     padding: 5px;
     border-radius: 5px;
+    font-size: 14px;
 }
 
 .msgdate {
@@ -93,4 +95,27 @@
 
 .message-footer {
     padding: 8px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    padding: 15px 0px;
+}
+
+.msg-headertitle {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.leftpane .row {
+    padding: 5px 0px;
+}
+
+.msg-linkstyle {
+    color: rgb(167, 137, 102);
+}
+
+.msg-linkdiv {
+    margin-top: 20px;
 }
