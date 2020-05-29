@@ -60,9 +60,9 @@
                 </tr>
                 {% for event in events %}
                 <tr>
-                    <td><a href="">{{event.restaurant.restaurant_name}}</a></td>
+                    <td><a href="/user/order/{{event.id}}/new">{{event.restaurant.restaurant_name}}</a></td>
                     <td>{{event.restaurant.cuisine}}</td>
-                    <td><a href="">{{event.date_time}}</a></td>
+                    <td><a href="/user/order/{{event.id}}/new">{{event.date_time}}</a></td>
                 </tr>
                 {% endfor %}
             </table>
