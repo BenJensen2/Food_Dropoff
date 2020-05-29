@@ -70,12 +70,12 @@ def user_info(request,user_id):
         user = User.objects.get(id=user_id)
         events = Event.objects.all().order_by("date_time")
         print(user)
-        print(user.orders)
+        print(user.orders.all())
         print(events)
         context = {
             'events' : events,
             'user' : user,
-            'orders' : user.orders
+            'orders' : user.orders.all()
         }
         return render(request,'user_info.html',context)
     else:
