@@ -57,7 +57,7 @@
                                     <a href="/messaging/{{one_order.id}}/confirm" role="button" class="btn btn-outline-dark btn-sm ajax-confirmorder" orderid = "{{one_order.id}}">Confirm</a>
                                     {% endif %}
                                     {% if one_order.status == 'Received' or one_order.status == 'Confirmed' %}
-                                    <a href="#" role="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#cancelorder">Cancel</a>
+                                    <a href="#" role="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#cancelorder">Cancel</a>
                                     {% endif %}
                                 </span>
                             </div>
