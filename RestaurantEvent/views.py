@@ -112,6 +112,7 @@ def viewEvent(request, eventID):
         "event": event,
         "orders": event.orders.all()
     }
+    print(event.orders.all())
     return render(request, "eventDetail.html", context)
 
 #Route is /event/<int:eventID>/complete

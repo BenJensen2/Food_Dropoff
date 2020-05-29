@@ -37,7 +37,6 @@
                 <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
                     {% for order in orders %}
-
                     <!-- Accordion card -->
                     <div class="card">
                 
@@ -46,7 +45,7 @@
                         <a data-toggle="collapse" data-parent="#accordionEx" href="#collapse{{order.id}}" aria-expanded="true"
                             aria-controls="collapse{{order.id}}">
                             <h5 class="mb-0">
-                            {{order.user.first_name}} {{order.user.last_name}} ({{order.status}})<i class="fas fa-angle-down rotate-icon"></i>
+                            {{order.user.first_name}} {{order.user.last_name}} <span id="orderStatus">({{order.status}})</span><i class="fas fa-angle-down rotate-icon"></i>
                             </h5>
                         </a>
                         </div>
@@ -63,19 +62,19 @@
                             <div class="input-group">
                                 <div class="form-check">
                                     <label for="">Received</label>
-                                    <input type="radio" name="orderStatus-{{order.id}}" value="Received">
+                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Received" >
                                 </div>
                                 <div class="form-check">
                                     <label for="">Confirmed</label>
-                                    <input type="radio" name="orderStatus-{{order.id}}" value="Confirmed" >
+                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Confirmed" >
                                 </div>
                                 <div class="form-check">
                                     <label for="">Cancelled</label>
-                                    <input type="radio" name="orderStatus-{{order.id}}" value="Cancelled" >
+                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Cancelled" >
                                 </div>
                                 <div class="form-check">
                                     <label for="">Completed</label>
-                                    <input type="radio" name="orderStatus-{{order.id}}" value="Completed" >
+                                    <input class="status" type="radio" name="orderStatus-{{order.id}}" value="Completed" >
                                 </div>
                             </div>
                             <div class="row">
@@ -131,5 +130,12 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    <script>
+        //Update order status when pressing radio button
+        $(document).on("click",".status", function(response){
+            console.log("Status clicked " + $(this).val() + $(this).attr("name"));
+            console.log($(this).parent().parent().parent().parent().parent().find('#orderStatus').html("("+$(this).val()+")"));
+        })
+    </script>
 </body>
 </html>
