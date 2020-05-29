@@ -124,12 +124,27 @@ def destroy(request,user_id):
         messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
         return redirect('/')
 
-def restaurant(request,restaurantID):
+def restaurant(request,restaurantID,eventID):
     if 'userID' in request.session:
         restaurant = Restaurant.objects.get(id=restaurantID)
+        check_events1 = restaurant.events.filter(status="In Progress")
+        check_events2 = restaurant.events.filter(status="Completed")
+        if check_events1:
+            id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
+        else:
+            id1 = -1
+        if check_events2:
+            id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
+        else:
+            id2 = -1
+
+        print(restaurant.events.all())
         context = {
             'events' : Event.objects.filter(restaurant=restaurant).order_by("date_time"),
-            'user' : request.session['userID']
+            'user' : request.session['userID'],
+            'one_restaurant': restaurant,
+            'id1': id1,
+            'id2': id2,
         }
         return render(request,'user_restaurant.html',context)
     else:
