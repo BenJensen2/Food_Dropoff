@@ -1,0 +1,8 @@
+{% for item in menu.items.all %}
+<tr>
+    <td>{{item.item_title}}</td>
+    <td>{{item.item_description}}</td>
+    <td>${{item.item_price|floatformat:2}}</td>
+    <td><a href="/menu/new/{{item.id}}/removeItem" class="delete" name="itemID">Delete</a></td>
+</tr>
+{% endfor %}

@@ -18,7 +18,7 @@
                         <h1>Add Items to Your Menu</h1>
                     </div>
                 </div>
-                <form action="/menu/new/addItem" method="POST">
+                <form id="menuForm" action="/menu/new/addItem" method="POST">
                     {% csrf_token %}
                     <table class="table table-striped">
                         <thead>
@@ -27,25 +27,16 @@
                             <th>Price</th>
                             <th></th>
                         </thead>
-                        <tbody>
-                            {% for item in menu.items.all %}
-                            <tr>
-                                <td>{{item.item_title}}</td>
-                                <td>{{item.item_description}}</td>
-                                <td>${{item.item_price|floatformat:2}}</td>
-                                <td><a href="/menu/new/{{item.id}}/removeItem" name="itemID"">Delete</a></td>
-                            </tr>
-                            {% endfor %}
-                            <tr>
-                                <td><input type="text" placeholder="Item" name="item"></td>
-                                <td><input type="text" placeholder="Description" name="description"></td>
-                                <td><input type="text" placeholder="Price" name="price"></td>
-                            </tr>
+                        <tbody id="menu">
+                                <!-- Ajax pulls menu items in here -->
                         </tbody>
                     </table>
                     <div class="row">
-                        <input type="text" value="{{menu.id}}" name="menuID" hidden>
-                        <div class="col text-right">
+                        <input class="col mx-1" type="text" placeholder="Item" name="item">
+                        <input class="col mx-1" type="text" placeholder="Description" name="description">
+                        <input class="col mx-1" type="text" placeholder="Price" name="price">
+                        <input class="col mx-1" type="text" value="{{menu.id}}" name="menuID" hidden>
+                        <div class="col mx-1 text-right">
                             <button type="submit" class="btn btn-primary">Add Item</button>
                         </div>
                     </div>
@@ -57,5 +48,39 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $.get({
+                url: "/menu/{{menu.id}}/content",
+                success: function(response){
+                    $('#menu').html(response);
+                }
+            })
+        })
+        //Handle button click for add item button
+        $(document).on("submit", "#menuForm", function(response){
+            response.preventDefault();
+            console.log("button clicked")
+            $.post({
+                url: "/menu/new/addItem",
+                data: $(this).serialize(),
+                success: function(response){
+                    console.log(response);
+                    $('#menu').html(response);
+                }
+            })
+        })
+        //Handle delete button
+        $(document).on("click", ".delete", function(response){
+            response.preventDefault();
+            $.get({
+                url: $(this).attr("href"),
+                success: function(response){
+                    console.log(response);
+                    $('#menu').html(response);
+                }
+            })
+        })
+    </script>
 </body>
 </html>
