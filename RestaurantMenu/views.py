@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Menu, Item
 from RestaurantLogin.models import *
+from django.http import JsonResponse
 
 debug = False
 
@@ -58,3 +59,12 @@ def create(request):
         name=request.POST['name']
     )
     return redirect('/restaurant_menu')
+
+def validateRID(request, restaurantID):
+    # if "userID" in request.session and request.is_ajax():
+    restaurant = Restaurant.objects.filter(id=restaurantID)
+    if restaurant:
+        return JsonResponse({"valid":True}, status = 200)
+    else:
+        return JsonResponse({"valid":False}, status = 200)
+    # return JsonResponse({"valid":False}, status = 200)
