@@ -34,11 +34,18 @@ def storeOrder(request, eventID):
         else:
             user = User.objects.get(id=request.session["userID"])
             event = Event.objects.get(id=eventID)
-            order = Order.objects.create(user = user, event=event, status="Received")
+            order = Order.objects.create(user = user, event=event, status="Received", total_price=0)
             for item_id, quantity in request.POST.items():
                 if item_id != "csrfmiddlewaretoken":
                     if int(quantity) > 0:
                         OrderQuantity.objects.create(item=Item.objects.get(id=int(item_id)), order = order, quantity= quantity)
+            #calculate up all order items
+            total = 0
+            items = order.quantities.all()
+            for item in items:
+                total += item.item.item_price * item.quantity
+            order.total_price = total
+            order.save()
             return redirect(f"/user/order/{event.id}/{order.id}/review")
     else:
         return redirect("/")
