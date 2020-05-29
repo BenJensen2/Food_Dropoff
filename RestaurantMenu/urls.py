@@ -9,7 +9,11 @@ urlpatterns = [
     path('new/create',views.create),
     path('new/addItem', views.addItem),
     path('new/<int:itemID>/removeItem', views.removeItem),
+
     path('checkRID/<int:restaurantID>', views.validateRID),
+
+    path('<int:menuID>/content', views.menuContent)
+
     # path('restaurant_menu/<int:show_id>', views.show_info),
     # path('restaurant_menu/<int:show_id>/edit', views.edit),
     # path('restaurant_menu/<int:show_id>/edit/update', views.update),

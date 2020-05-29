@@ -11,11 +11,18 @@
 <body>
     {% include "navbar.html" %}
     <div class="container">
-        <div class="row">
-            <div class="col">
+        <div class="row justify-content-center">
+            <div class="col-9">
                 <div class="row justify-content-center">
                     <h1>Create A New Event</h1>
                 </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == "menu" %}
+                        <div class="row alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
                 <form action="/event/new/create" method="POST">
                     {% csrf_token %}
                     {% for message in messages %}
@@ -139,7 +146,10 @@
                         </div>
                     </div>
                     <div class="row my-2 justify-content-center">
-                        <div class="col-2">
+                        <div class="col text-left">
+                            <a class="btn btn-outline-danger" href="/restaurantlogin/welcome">Cancel</a>
+                        </div>
+                        <div class="col text-right">
                             <button type="submit" class="btn btn-primary">Create Event</button>
                         </div>
                     </div>

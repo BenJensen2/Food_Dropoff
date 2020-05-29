@@ -7,6 +7,7 @@ urlpatterns = [
     path('',views.index), # render login form
     path('register',views.register), # render registration form
     path('login',views.login), # process login request
+    path('logout',views.logout), # process logout request
     path('create',views.create), # process registration request
     path('editroute',views.editroute), # route from navbar to edit form
     path('edit/<int:restaurantID>',views.edit), # render edit account form
