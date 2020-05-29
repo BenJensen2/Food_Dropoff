@@ -24,7 +24,7 @@ def users(request):
         else:
             request.session.flush()
             return redirect('/')
-    return render(request,'/')
+    return render(request,'user_login.html')
 
 def login(request):
     errors = User.objects.login_validator(request.POST)
