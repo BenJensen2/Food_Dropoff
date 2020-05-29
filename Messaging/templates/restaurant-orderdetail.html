@@ -37,7 +37,7 @@
                 {% load tz %}
                 <div class="row justify-content-center">
                     <div class="col-8 text-center">
-                        <p>{{one_order.event.date_time|timezone:"US/Pacific"|date:'F j, Y' }}</p>
+                        <p class="title">Event Date: {{one_order.event.date_time|timezone:"US/Pacific"|date:'F j, Y' }}</p>
                         <div class="row">
                             <div class="col col-sm-4 text-left">
                                 Order ID:
@@ -70,7 +70,7 @@
                                 {{one_order.user.first_name}} {{one_order.user.last_name}}
                                 {% if one_order.status != 'Completed' or one_order.status != 'Cancelled' %}
                                 <span>
-                                    <a href="#" class="ajax-message" orderid="{{one_order.id}}" fname="{{one_urser.user.first_name}}">Message {{one_order.user.first_name}}</a>
+                                    <a href="#" class="ajax-message msg-linkstyle" orderid="{{one_order.id}}" fname="{{one_urser.user.first_name}}">Message {{one_order.user.first_name}}</a>
                                 </span>
                                 {% endif %}
                             </div>
