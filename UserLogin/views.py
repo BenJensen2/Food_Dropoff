@@ -10,7 +10,21 @@ def index(request):
     return render(request,'homepage.html')
 
 def users(request):
-    return render(request,'user_login.html')
+    if 'restaurantID' in request.session:
+        restaurant = Restaurant.objects.filter(id=request.session['restaurantID'])
+        if restaurant:
+            return redirect('/restaurantlogin/welcome')
+        else:
+            request.session.flush()
+            return redirect('/')
+    elif 'userID' in request.session:
+        user = User.objects.filter(id=request.session['userID'])
+        if user:
+            return redirect(f"/users/{request.session['userID']}")
+        else:
+            request.session.flush()
+            return redirect('/')
+    return render(request,'/')
 
 def login(request):
     errors = User.objects.login_validator(request.POST)
