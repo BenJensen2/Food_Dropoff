@@ -60,7 +60,8 @@
                 </tr>
                 {% for event in events %}
                 <tr>
-                    <td><a href="/users/restaurant/{{event.restaurant.id}}">{{event.restaurant.restaurant_name}}</a></td>
+                    <td><a href="/users/restaurant/{{event.restaurant.id}}/{{event.id}}">{{event.restaurant.restaurant_name}}</a></td>
+
                     <td>{{event.restaurant.cuisine}}</td>
                     <td><a href="">{{event.date_time}}</a></td>
                 </tr>
