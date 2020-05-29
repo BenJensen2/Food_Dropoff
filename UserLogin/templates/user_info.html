@@ -58,14 +58,14 @@
                                     <p class="text-left">Location: {{order.event.location}}</p>
                                     <p class="text-left">Time: {{order.event.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
                                     <p class="text-left">Price: </p>
-                                    <p class="text-right"><a href="/user/order/{{i.id}}/new">View/Place Order</a></p>
+                                    <p class="text-right"><a href="/messaging/{{order.id}}">View/Place Order</a></p>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
 
-                    <div class="accordion" id="upcomingevents">
+                    <!-- <div class="accordion" id="upcomingevents">
                         {% load tz %}
                         {% for order in orders2|dictsort:"created_at" %}
                         <div class="card">
@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         {% endfor %}
-                    </div>
+                    </div> -->
 
                 </div>
 
