@@ -13,29 +13,45 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-7">
-                <div class="row">
+                <div class="row my-2">
                     <div class="col text-center">
                         <h1>{{restaurant.restaurant_name}}</h1>
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row  my-2justify-content-center">
                     <div class="col text-left">
-                        Pickup Time: {{event.date_time}}
+                        <div class="row">
+                            <div class="col-3 text-left">
+                                <span class="font-weight-bold">Pickup Time: </span>
+                            </div>
+                            <div class="col text-left">
+                                {{event.date_time}}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row my-2 justify-content-center">
                     <div class="col text-left">
-                        Pickup Location: {{event.location}}
+                        <div class="row">
+                            <div class="col-3 text-left">
+                                <span class="font-weight-bold">Pickup Location: </span>
+                            </div>
+                            <div class="col text-left">
+                                {{event.location}}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row my-2 justify-content-center">
                     <div class="col text-left">
-                        Notes: {{event.notes}}
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col text-left">
-                        Menu:
+                        <div class="row">
+                            <div class="col-3 text-left">
+                                <span class="font-weight-bold">Notes: </span>
+                            </div>
+                            <div class="col text-left">
+                                {{event.notes}}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <form action="/user/order/{{event.id}}/storeOrder" method="POST">
