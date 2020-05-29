@@ -45,7 +45,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-sm-8">
-                {% if one_restaurant.events|length == 0 %}
+                {% if one_restaurant.events.all|length == 0 %}
                 <p class="text-center">Create your first event.</p>
                 <!-- <div class="row justify-content-between">
                     Upcoming Events:
@@ -77,7 +77,7 @@
                             <div class="card-body">
                                 <p class="text-left">Location: {{i.location}}</p>
                                 <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                <p class="text-left">Orders: {{i.orders|length}}</p>
+                                <p class="text-left">Orders: {{i.orders.all|length}}</p>
                                 <p class="text-right"><a href="/event/{{i.id}}">View/Edit</a></p>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                             <div class="card-body">
                                 <p class="text-left">Location: {{i.location}}</p>
                                 <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                <p class="text-left">Orders: {{i.orders|length}}</p>
+                                <p class="text-left">Orders: {{i.orders.all|length}}</p>
                                 <p class="text-right"><a href="/event/{{i.id}}">View</a></p>
                             </div>
                         </div>

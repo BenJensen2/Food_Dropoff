@@ -12,7 +12,7 @@ urlpatterns = [
     path('<int:eventID>', views.viewEvent),
     path('<int:eventID>/complete', views.completeEvent),
 
-    path('<int:restaurantID>', views.restaurantPage), #restaurant detail page for users
+    path('restaurant/<int:restaurantID>', views.restaurantPage), #restaurant detail page for users
 
     path('<int:eventID>/delete', views.cancelEvent),
 
