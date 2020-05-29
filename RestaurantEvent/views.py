@@ -119,7 +119,7 @@ def completeEvent(request, eventID):
     event = Event.objects.get(id=eventID)
     event.status = "Completed"
     event.save()
-    return redirect(f"/event/{event.id}")
+    return redirect(f"/restaurantlogin/welcome")
 
 
 #Route is /event/<int:restaurantID>

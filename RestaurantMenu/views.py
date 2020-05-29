@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Menu, Item
 from RestaurantLogin.models import *
+from django.http import JsonResponse
 
 debug = False
 
@@ -38,7 +39,7 @@ def addItem(request):
         menu = Menu.objects.get(id = request.POST["menuID"])
         item = Item.objects.create(item_title = request.POST["item"], item_description = request.POST["description"], item_price = request.POST["price"], restaurant = restaurant)
         menu.items.add(item)
-        return redirect("/menu/new")
+        return redirect(f"/menu/{menu.id}/content")
     else:
         return redirect("/")
 
@@ -47,9 +48,10 @@ def removeItem(request, itemID):
     if debug:
         request.session["restaurantID"] = 1
     if "restaurantID" in request.session:
+        menu = Restaurant.objects.get(id=request.session["restaurantID"]).menus.first()
         item = Item.objects.get(id=itemID)
         item.delete()
-        return redirect("/menu/new")
+        return redirect(f"/menu/{menu.id}/content")
     else:
         return redirect("/")
 
@@ -58,3 +60,23 @@ def create(request):
         name=request.POST['name']
     )
     return redirect('/restaurant_menu')
+
+
+def validateRID(request, restaurantID):
+    # if "userID" in request.session and request.is_ajax():
+    restaurant = Restaurant.objects.filter(id=restaurantID)
+    if restaurant:
+        return JsonResponse({"valid":True}, status = 200)
+    else:
+        return JsonResponse({"valid":False}, status = 200)
+    # return JsonResponse({"valid":False}, status = 200)
+
+#path is /menu/<int:menuID>/content for Ajax getting menu items
+def menuContent(request, menuID):
+    restaurant = Restaurant.objects.get(id=request.session["restaurantID"])
+    menu = restaurant.menus.first()
+    context = {
+        "menu": menu
+    }
+    return render(request, "menuContent.html", context)
+

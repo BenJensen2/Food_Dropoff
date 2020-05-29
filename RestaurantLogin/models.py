@@ -42,10 +42,10 @@ class RestaurantManager(models.Manager):
         if len(postData['phone_number']) != 10:
             errors['phone_number'] = "Enter a valid phone number with area code without dashes, parentheses or spaces"
         
-        PW_REGEX = re.compile(r'^(?=.*\d)[a-zA-Z\d]{8,20}$')
+        PW_REGEX = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
         if restaurantID < 0 or len(postData['password']) > 0:
             if not PW_REGEX.match(postData['password']):
-                errors['password'] = "Password must be between 8-20 characters in length and must contain at least one number"
+                errors['password'] = "Password must be between 8-20 characters in length and must contain at least one number, one lowercase character, one uppercase character, and one special character"
         
         if not postData['password'] == postData['confirmpw']:
             errors['confirmpw'] = "Passwords do not match - please confirm password again"
