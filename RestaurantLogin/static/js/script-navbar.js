@@ -20,7 +20,7 @@ $( document ).ready(function() {
                         return false;
                     } else {
                         console.log(response);
-                        window.location.href = "/event/restaurant/" + rid;
+                        window.location.href = "/users/restaurant/" + rid;
                         return false;
                     }        
                 },
