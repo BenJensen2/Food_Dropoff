@@ -32,9 +32,9 @@
                         </tbody>
                     </table>
                     <div class="row">
-                        <input class="col mx-1" type="text" placeholder="Item" name="item">
-                        <input class="col mx-1" type="text" placeholder="Description" name="description">
-                        <input class="col mx-1" type="text" placeholder="Price" name="price">
+                        <input class="col mx-1" id="itemInput" type="text" placeholder="Item" name="item">
+                        <input class="col mx-1" id="descriptionInput" type="text" placeholder="Description" name="description">
+                        <input class="col mx-1" id="priceInput" type="text" placeholder="Price" name="price">
                         <input class="col mx-1" type="text" value="{{menu.id}}" name="menuID" hidden>
                         <div class="col mx-1 text-right">
                             <button type="submit" class="btn btn-primary">Add Item</button>
@@ -67,6 +67,10 @@
                 success: function(response){
                     console.log(response);
                     $('#menu').html(response);
+                    //Clear input in the input fields
+                    $('#itemInput').val("");
+                    $('#priceInput').val("");
+                    $('#descriptionInput').val("");
                 }
             })
         })
