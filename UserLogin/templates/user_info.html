@@ -58,7 +58,7 @@
                                     <a data-toggle="collapse" data-parent="#accordionEx" href="#collapse{{order.id}}" aria-expanded="true" aria-controls="collapse{{order.id}}">
                                         <div class="row justify-content-between">
                                             <div class="col">
-                                                <h5 class="mb-0">{{order.user.first_name}} {{order.user.last_name}} ({{order.status}})</h5>
+                                                <h5 class="mb-0">{{order.event.date_time|timezone:"US/Pacific"|date:'F j, Y'}} ({{order.status}})</h5>
                                             </div>
                                             <div class="col text-right text-dark">
                                                 <h5>{{order.event.restaurant.restaurant_name}}</h5>
@@ -104,7 +104,7 @@
                                     <a data-toggle="collapse" data-parent="#accordionEx" href="#collapse{{order.id}}" aria-expanded="true" aria-controls="collapse{{order.id}}">
                                         <div class="row justify-content-between">
                                             <div class="col">
-                                                <h5 class="mb-0">{{order.user.first_name}} {{order.user.last_name}} ({{order.status}})</h5>
+                                                <h5 class="mb-0">{{order.event.date_time|timezone:"US/Pacific"|date:'F j, Y'}} ({{order.status}})</h5>
                                             </div>
                                             <div class="col text-right text-dark">
                                                 <h5>{{order.event.restaurant.restaurant_name}}</h5>
