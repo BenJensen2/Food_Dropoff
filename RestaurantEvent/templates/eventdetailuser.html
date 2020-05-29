@@ -15,7 +15,7 @@
         
         <div class="row justify-content-center">
             <div class="col-sm-8">
-                {% if one_restaurant.events|length == 0 %}
+            {% if one_restaurant.events.all|length == 0 %}
                 <p class="text-center">{{one_restaurant.restaurant_name}} does not have any events yet.</p>
                 {% else %}
                 <div class="accordion" id="upcomingevents">
@@ -35,8 +35,7 @@
                             <div class="card-body">
                                 <p class="text-left">Location: {{i.location}}</p>
                                 <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                <p class="text-left">Orders: {{i.orders|length}}</p>
-                                <p class="text-right"><a href="/event/{{i.id}}">View/Edit</a></p>
+                                <p class="text-right"><a href="/user/order/{{i.id}}/new">Place an Order</a></p>
                             </div>
                         </div>
                     </div>
@@ -49,6 +48,7 @@
         <div class="row borderdiv"></div>
         <div class="row justify-content-center">
             <div class="col-sm-8">
+            {% if one_restaurant.events.all|length == 0 %}
                 <p class="text-left title">Past Events:</p>
                 <div class="accordion" id="pastevents">
                     
@@ -67,14 +67,14 @@
                             <div class="card-body">
                                 <p class="text-left">Location: {{i.location}}</p>
                                 <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                <p class="text-left">Orders: {{i.orders|length}}</p>
-                                <p class="text-right"><a href="/event/{{i.id}}">View</a></p>
+                                <!-- <p class="text-right"><a href="/event/{{i.id}}">View</a></p> -->
                             </div>
                         </div>
                     </div>
                     {% endif %}
                     {% endfor %}
                 </div>
+            {% endif %}
             </div>
         </div>
         <div class="row justify-content-center">
