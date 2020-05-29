@@ -51,9 +51,9 @@ $( document ).ready(function() {
     });
     
     // Confirm order
-    $(".main").on('click', '.ajax-confirmorder', function() {
-        // e.preventDefault();
-        oid = parInt($(this).attr('orderid'));
+    $(".main").on('click', '.ajax-confirmorder', function(e) {
+        e.preventDefault();
+        oid = parseInt($(this).attr('orderid'));
         $.ajax({
             type: 'GET',
             url: "/messaging/" + oid + "/confirm",
