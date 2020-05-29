@@ -156,7 +156,7 @@ def restaurant(request,restaurantID):
                 'one_restaurant': restaurant,
                 'id1': id1,
                 'id2': id2,
-                'one_menu': Menu.objects.filter(restaurant_id=restaurantID)[0]
+                'one_menu': Menu.objects.get(restaurant_id=restaurantID)
             }
             return render(request,'user_restaurant.html',context)
 
