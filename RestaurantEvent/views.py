@@ -33,7 +33,7 @@ def createEvent(request):
             restaurant = Restaurant.objects.get(id=request.session['restaurantID'])
             #Make sure the restuarant object menu has items
             if len(restaurant.menus.first().items.all()) < 1:
-                messages.error(request, "Menu does not have any items, please add items to menu before creating event", extra_tags="menu")
+                messages.error(request, "Menu does not have any items, please add items to menu before creating", extra_tags="menu")
                 return redirect("/event/new")
             else:
                 #Create the location for the event

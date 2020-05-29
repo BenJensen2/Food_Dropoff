@@ -19,7 +19,7 @@
                 {% for message in messages %}
                         {% if message.extra_tags == "menu" %}
                         <div class="row alert-danger">
-                            {{message}}
+                            {{message}} <a href="/menu/new"> Click here to add menu items</a>
                         </div>
                         {% endif %}
                     {% endfor %}
