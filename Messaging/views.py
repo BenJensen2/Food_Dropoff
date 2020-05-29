@@ -131,7 +131,7 @@ def refreshMessage(request, orderID):
                         'one_order': Order.objects.get(id=orderID),
                         'order_messages': Message.objects.filter(order_id=orderID).order_by('created_at'),
                     }
-                    return render(request,'user-messages.html', context)
+                    return render(request,'user-msgcontent.html', context)
     return redirect('/')
 
 def sendMessage(request):
@@ -158,5 +158,5 @@ def sendMessage(request):
                         'one_order': Order.objects.get(id=request.POST['oid']),
                         'order_messages': Message.objects.filter(order_id=request.POST['oid']).order_by('created_at'),
                     }
-                    return render(request,'user-messages.html', context)
+                    return render(request,'user-msgcontent.html', context)
     return redirect('/')

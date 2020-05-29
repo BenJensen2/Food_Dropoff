@@ -142,7 +142,7 @@ $( document ).ready(function() {
     }
     
     // Send message and reload messages
-    $('.main').on('submit', '.ajaxform-msg', function(e) {
+    $(document).on('submit', '.ajaxform-msg', function(e) {
         console.log('1');
         e.preventDefault();
         console.log('2');
@@ -155,14 +155,17 @@ $( document ).ready(function() {
                 data: $(this).serialize(),
                 success: function (response) {
                     // console.log(response);
+                    console.log('success');
                     $('.message-content').html(response);
-                    $('.message-content').scrollTop(function() { return $('.message-content').scrollHeight; });
+                    $('.message-content').scrollTop(function() { return $('.message-content')[0].scrollHeight; });
+                    console.log($(".message-content").height());
+                    console.log($(".message-content")[0].scrollHeight);
                 },
                 error: function(response) {
                     console.log(response);
                 }
             })
-        }
+        } 
         scrolling=false;
         $('.ajaxform-msg').trigger('reset');
     });

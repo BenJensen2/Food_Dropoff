@@ -121,7 +121,7 @@ $('.main').on('submit', '.ajaxform-msg', function(e) {
             success: function (response) {
                 // console.log(response);
                 $('.message-content').html(response);
-                $('.message-content').scrollTop(function() { return $('.message-content').scrollHeight; });
+                $('.message-content').scrollTop(function() { return $('.message-content')[0].scrollHeight; });
             },
             error: function(response) {
                 console.log(response);
