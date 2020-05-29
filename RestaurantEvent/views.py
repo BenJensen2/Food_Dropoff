@@ -154,7 +154,7 @@ def restaurantPage(request, restaurantID):
                 'id2': id2,
                 'one_menu': Menu.objects.filter(restaurant_id=restaurantID)
             }
-            return render(request,'/users/eventdetailuser.html',context)
+            return render(request,'eventdetailuser.html',context)
 
         return redirect('/userlogin')
     return redirect('/')

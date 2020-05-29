@@ -12,21 +12,11 @@
     {% include "user-navbar.html" %}
     <div class="container">
         <div class="row justify-content-center">{{one_restaurant.restaurant_name}}</div>
-        <div class="row justify-content-end">
-            <span>
-                <a href="/event/new">
-                    <svg class="bi bi-plus-circle" width="2em" height="2em" viewBox="0 0 16 16" fill="black" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
-                    <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
-                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    </svg>
-                </a>
-            </span>
-        </div>
+        
         <div class="row justify-content-center">
             <div class="col-sm-8">
                 {% if one_restaurant.events|length == 0 %}
-                <p class="text-center">Create your first event.</p>
+                <p class="text-center">{{one_restaurant.restaurant_name}} does not have any events yet.</p>
                 {% else %}
                 <div class="accordion" id="upcomingevents">
                     {% load tz %}
