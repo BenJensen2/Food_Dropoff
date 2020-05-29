@@ -155,6 +155,7 @@ def editroute(request):
     if 'userID' in request.session:
         user = User.objects.filter(id=request.session['userID'])
         if user:
+            print('redirecting')
             return redirect(f"/users/{request.session['userID']}/account")
         else:
             request.session.flush()

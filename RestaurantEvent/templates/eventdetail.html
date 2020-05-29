@@ -97,7 +97,7 @@
                         <a class="btn btn-outline-danger" href="/event/{{event.id}}/edit">Edit Event</a>
                     </div>
                     <div class="col text-center">
-                        <a href="/event/{{event.id}}/delete" class="btn btn-danger">Cancel Event</a>
+                        <a data-toggle="modal" data-target="#confirmCancellationModal" class="btn btn-danger">Cancel Event</a>
                     </div>
                     <div class="col text-right">
                         <a href="/event/{{event.id}}/complete" class="btn btn-primary">Complete Event</a>
@@ -105,6 +105,27 @@
                 </div>
             </div>
         </div>
+
+  <!-- Modal for confirming event cancellation -->
+  <div class="modal fade" id="confirmCancellationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to cancel?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Cancelling the event will cancel all user orders that have been placed and cannot be undone.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="/event/{{event.id}}/delete" class="btn btn-danger">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
