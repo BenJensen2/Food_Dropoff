@@ -69,6 +69,7 @@ def create(request):
 def user_info(request,user_id):
     if 'userID' in request.session:
         user = User.objects.get(id=user_id)
+
         context = {
             'events' : Event.objects.all().order_by("date_time"),
             'user' : user,
@@ -150,12 +151,12 @@ def restaurant(request,restaurantID):
                 id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
             else:
                 id2 = -1
-            
+            print(Menu.objects.filter(restaurant_id=restaurantID))
             context = {
                 'one_restaurant': restaurant,
                 'id1': id1,
                 'id2': id2,
-                'one_menu': Menu.objects.filter(restaurant_id=restaurantID)
+                'one_menu': Menu.objects.filter(restaurant_id=restaurantID)[0]
             }
             return render(request,'user_restaurant.html',context)
 
