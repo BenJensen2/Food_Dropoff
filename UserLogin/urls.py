@@ -15,6 +15,6 @@ urlpatterns = [
     path('users/<int:user_id>/update',views.update),    # Update Account Function: Not Working
     path('users/<int:user_id>/destroy',views.destroy),  # Delete User Function
 
-    path('users/restaurant/<int:restaurantID>/<int:eventID>',views.restaurant),        # Shows Restaurant info from User side
+    path('users/restaurant/<int:restaurantID>',views.restaurant),        # Shows Restaurant info from User side
     path('users/editroute',views.editroute),        # go from navbar to editaccount
 ]

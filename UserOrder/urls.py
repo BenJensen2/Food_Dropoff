@@ -8,7 +8,8 @@ urlpatterns = [
     path('<int:eventID>/new', views.newOrder),
     path('<int:eventID>/storeOrder', views.storeOrder),
     path('<int:eventID>/<int:orderID>/review', views.reviewOrder),
-    path('<int:eventID>/<int:orderID>/change', views.changeOrder)
+    path('<int:eventID>/<int:orderID>/change', views.changeOrder),
+    path('<int:eventID>/<int:orderID>/status/<str:status>/update', views.updateOrderStatus)
     
     # path('user_order/new', views.new),
     # path('user_order/new/create',views.create),

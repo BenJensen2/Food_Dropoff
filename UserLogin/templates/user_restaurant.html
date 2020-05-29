@@ -6,16 +6,18 @@
     <title>Food Dropoff</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style-restaurant.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     {% include "user-navbar.html" %}
     <div class="container">
         <div class="row justify-content-center">{{one_restaurant.restaurant_name}}</div>
+        
         <div class="row justify-content-center">
             <div class="col-sm-8">
+
                 {% if one_restaurant.events.all|length == 0 %}
-                <p class="text-center">Create your first event.</p>
+                <p class="text-center">{{one_restaurant.restaurant_name}} does not have any events yet.</p>
                 {% else %}
                 <div class="accordion" id="upcomingevents">
                     {% load tz %}
@@ -34,8 +36,7 @@
                             <div class="card-body">
                                 <p class="text-left">Location: {{i.location}}</p>
                                 <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                <p class="text-left">Orders: {{i.orders.all|length}}</p>
-                                <p class="text-right"><a href="/user/order/{{i.id}}/new">View/Place Order</a></p>
+                                <p class="text-right"><a href="/user/order/{{i.id}}/new">Place an Order</a></p>
                             </div>
                         </div>
                     </div>
@@ -46,10 +47,60 @@
             </div>
         </div>
         <div class="row borderdiv"></div>
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+            {% if one_restaurant.events.all|length == 0 %}
+                <p class="text-left title">Past Events:</p>
+                <div class="accordion" id="pastevents">
+                    
+                    {% for i in one_restaurant.events.all|dictsortreversed:"date_time" %}
+                    {% if i.status == 'Completed' %}
+                    <div class="card">
+                        <div class="card-header" id="heading{{i.id}}">
+                            <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{i.id}}" aria-expanded="true" aria-controls="collapse{{i.id}}">
+                                {{i.date_time|timezone:"US/Pacific"|date:'F j, Y'}} - {{i.location.address}}, {{i.location.city}}
+                            </button>
+                            </h2>
+                        </div>
+                    
+                        <div id="collapse{{i.id}}" class="collapse {%if i.id == id2 %}show{% endif %}" aria-labelledby="heading{{i.id}}" data-parent="#pastevents">
+                            <div class="card-body">
+                                <p class="text-left">Location: {{i.location}}</p>
+                                <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
+                                <!-- <p class="text-right"><a href="/event/{{i.id}}">View</a></p> -->
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <table class="table table-striped">
+                <thead>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </thead>
+                <tbody>
+                    {% for m in one_menu.items.all %}
+                    <tr>
+                        <td>{{m.item_title}}</td>
+                        <td>{{m.item_description}}</td>
+                        <td>{{m.item_price}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="{% static 'js/script-restaurant.js' %}"></script>       
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

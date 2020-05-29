@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from RestaurantEvent.models import Event
+from RestaurantMenu.models import Menu
 from RestaurantLogin.models import Restaurant
 from .models import User, UserManager
 from django.contrib import messages
@@ -135,32 +136,41 @@ def destroy(request,user_id):
         messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
         return redirect('/')
 
-def restaurant(request,restaurantID,eventID):
-    if 'userID' in request.session:
-        restaurant = Restaurant.objects.get(id=restaurantID)
-        check_events1 = restaurant.events.filter(status="In Progress")
-        check_events2 = restaurant.events.filter(status="Completed")
-        if check_events1:
-            id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
+def restaurant(request,restaurantID):
+    if 'restaurantID' in request.session:
+        restaurant = Restaurant.objects.filter(id=request.session['restaurantID'])
+        if restaurant:
+            return redirect('/restaurantlogin')
         else:
-            id1 = -1
-        if check_events2:
-            id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
-        else:
-            id2 = -1
+            request.session.flush()
+            return redirect('/')
+    elif 'userID' in request.session:
+        user = User.objects.filter(id=request.session['userID'])
+        restaurant = Restaurant.objects.filter(id=restaurantID)
+        if user and restaurant:
+            user = User.objects.get(id=request.session['userID'])
+            restaurant = Restaurant.objects.get(id=restaurantID)
+            check_events1 = restaurant.events.filter(status="In Progress")
+            check_events2 = restaurant.events.filter(status="Completed")
+            if check_events1:
+                id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
+            else:
+                id1 = -1
+            if check_events2:
+                id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
+            else:
+                id2 = -1
+            
+            context = {
+                'one_restaurant': restaurant,
+                'id1': id1,
+                'id2': id2,
+                'one_menu': Menu.objects.filter(restaurant_id=restaurantID)
+            }
+            return render(request,'eventdetailuser.html',context)
 
-        print(restaurant.events.all())
-        context = {
-            'events' : Event.objects.filter(restaurant=restaurant).order_by("date_time"),
-            'user' : request.session['userID'],
-            'one_restaurant': restaurant,
-            'id1': id1,
-            'id2': id2,
-        }
-        return render(request,'user_restaurant.html',context)
-    else:
-        messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
-        return redirect('/')
+        return redirect('/userlogin')
+    return redirect('/')
 
 def editroute(request):
     if 'userID' in request.session:
@@ -179,3 +189,30 @@ def editroute(request):
             request.session.flush()
             return redirect('/')
     return render(request,'/')
+
+
+    # if 'userID' in request.session:
+    #     restaurant = Restaurant.objects.get(id=restaurantID)
+    #     check_events1 = restaurant.events.filter(status="In Progress")
+    #     check_events2 = restaurant.events.filter(status="Completed")
+    #     if check_events1:
+    #         id1 = restaurant.events.filter(status="In Progress").order_by("date_time")[0].id
+    #     else:
+    #         id1 = -1
+    #     if check_events2:
+    #         id2 = restaurant.events.filter(status="Completed").order_by("-date_time")[0].id
+    #     else:
+    #         id2 = -1
+
+    #     print(restaurant.events.all())
+    #     context = {
+    #         'events' : Event.objects.filter(restaurant=restaurant).order_by("date_time"),
+    #         'user' : request.session['userID'],
+    #         'one_restaurant': restaurant,
+    #         'id1': id1,
+    #         'id2': id2,
+    #     }
+    #     return render(request,'user_restaurant.html',context)
+    # else:
+    #     messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
+    #     return redirect('/')
