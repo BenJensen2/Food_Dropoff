@@ -61,7 +61,9 @@
                 {% for event in events %}
                 {% if event.status == "In Progress" %}
                 <tr>
-                    <td><a href="/user/order/{{event.id}}/new">{{event.restaurant.restaurant_name}}</a></td>
+
+                    <td><a href="/users/restaurant/{{event.restaurant.id}}">{{event.restaurant.restaurant_name}}</a></td>
+
                     <td>{{event.restaurant.cuisine}}</td>
                     <td><a href="/user/order/{{event.id}}/new">{{event.date_time}}</a></td>
                 </tr>

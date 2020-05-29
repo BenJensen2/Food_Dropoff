@@ -2,7 +2,7 @@ from django.urls import path #Include path function
 from . import views # import views file within the same folder (from .)
 
 # RESTful
-#Path starts with /user/order
+#Path starts with /user/order/
 urlpatterns = [
     path('user_order',views.index),
     path('<int:eventID>/new', views.newOrder),

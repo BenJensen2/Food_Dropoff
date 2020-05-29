@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from RestaurantEvent.models import Event
+from RestaurantLogin.models import Restaurant
 from .models import User, UserManager
 from django.contrib import messages
 import bcrypt
@@ -99,6 +100,18 @@ def destroy(request,user_id):
     if 'userID' in request.session:
         User.objects.get(id=user_id).delete()
         return redirect('/users')
+    else:
+        messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
+        return redirect('/')
+
+def restaurant(request,restaurantID):
+    if 'userID' in request.session:
+        restaurant = Restaurant.objects.get(id=restaurantID)
+        context = {
+            'events' : Event.objects.filter(restaurant=restaurant).order_by("date_time"),
+            'user' : request.session['userID']
+        }
+        return render(request,'user_restaurant.html',context)
     else:
         messages.error(request,'You do not have access to this page. Login to continue',extra_tags='no_access')
         return redirect('/')
