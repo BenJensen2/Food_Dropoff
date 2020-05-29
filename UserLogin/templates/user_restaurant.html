@@ -78,36 +78,6 @@
             </div>
         </div>
         <div class="row borderdiv"></div>
-        <div class="row justify-content-center">
-            <div class="col-sm-8">
-                <p class="text-left title">Past Events:</p>
-                <div class="accordion" id="pastevents">
-                    
-                    {% for i in one_restaurant.events.all|dictsortreversed:"date_time" %}
-                    {% if i.status == 'Completed' %}
-                    <div class="card">
-                        <div class="card-header" id="heading{{i.id}}">
-                            <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{i.id}}" aria-expanded="true" aria-controls="collapse{{i.id}}">
-                                {{i.date_time|timezone:"US/Pacific"|date:'F j, Y'}} - {{i.location.address}}, {{i.location.city}}
-                            </button>
-                            </h2>
-                        </div>
-                    
-                        <div id="collapse{{i.id}}" class="collapse {%if i.id == id2 %}show{% endif %}" aria-labelledby="heading{{i.id}}" data-parent="#pastevents">
-                            <div class="card-body">
-                                <p class="text-left">Location: {{i.location}}</p>
-                                <p class="text-left">Time: {{i.date_time|timezone:"US/Pacific"|date:'h:i A'}}</p>
-                                <p class="text-left">Orders: {{i.orders.all|length}}</p>
-                                <p class="text-right"><a href="/event/{{i.id}}">View</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
